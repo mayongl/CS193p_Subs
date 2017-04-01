@@ -1,0 +1,7192 @@
+1
+00:00:00,001 --> 00:00:03,235
+[MUSIC]                         
+
+2
+00:00:03,237 --> 00:00:09,508
+Stanford University.            
+>> Welcome to Stanford CS193P,  
+
+3
+00:00:09,510 --> 00:00:14,213
+Developing Applications for     
+iOS, winter of 2017.            
+
+4
+00:00:14,215 --> 00:00:18,217
+This is Lecture number 7, and   
+today we're going to talk       
+
+5
+00:00:18,219 --> 00:00:22,654
+a little bit more about Swift.  
+And once we do that,            
+
+6
+00:00:22,656 --> 00:00:26,158
+we can introduce some           
+technology that we need         
+
+7
+00:00:26,160 --> 00:00:29,895
+to do more sophisticated        
+UIKit objects like,             
+
+8
+00:00:29,897 --> 00:00:33,665
+scroll views can be our first   
+examples of that today's web    
+
+9
+00:00:33,667 --> 00:00:37,336
+demo at the end where we show   
+you how to use scroll view.     
+
+10
+00:00:37,338 --> 00:00:41,774
+First thing I wanna talk about  
+in Swift is error handling. So  
+
+11
+00:00:41,776 --> 00:00:45,511
+far, we have not called         
+any methods that                
+
+12
+00:00:45,513 --> 00:00:50,582
+can generate an error, or what  
+we call throwing an error. And  
+
+13
+00:00:50,584 --> 00:00:54,053
+we can always tell these        
+methods though really clearly   
+
+14
+00:00:54,055 --> 00:00:57,356
+in any API.                     
+Because when they're declared,  
+
+15
+00:00:57,358 --> 00:00:59,792
+they'll have the word           
+throws after it. And            
+
+16
+00:00:59,794 --> 00:01:03,195
+throws means that somewhere in  
+the processing of this method,  
+
+17
+00:01:03,197 --> 00:01:06,865
+it's possible, but not          
+guaranteed, that it will throw  
+
+18
+00:01:06,867 --> 00:01:10,602
+an error. So when it            
+throws that error at us,        
+
+19
+00:01:10,604 --> 00:01:14,973
+we have to catch the error.     
+And the way we catch it is,     
+
+20
+00:01:14,975 --> 00:01:17,476
+well, first of all,             
+every time we call a method     
+
+21
+00:01:17,478 --> 00:01:20,746
+that can throw an error, we     
+have to use the word try. So    
+
+22
+00:01:20,748 --> 00:01:24,049
+we have to try that method      
+because it might fail.          
+
+23
+00:01:24,051 --> 00:01:26,151
+So that's why we use            
+the word try. But               
+
+24
+00:01:26,153 --> 00:01:27,886
+if we wanna catch               
+the error that comes back,      
+
+25
+00:01:27,888 --> 00:01:31,256
+we actually have to do that     
+little try inside what's        
+
+26
+00:01:31,258 --> 00:01:36,462
+called a do construct.          
+So we have to say do{, and      
+
+27
+00:01:36,464 --> 00:01:41,633
+then some code that has some    
+tries in it. And then} catch,   
+
+28
+00:01:41,635 --> 00:01:46,271
+then let error is going to      
+allow us to grab the thrown     
+
+29
+00:01:46,273 --> 00:01:49,241
+error into a variable,          
+in this case called error.      
+
+30
+00:01:49,243 --> 00:01:52,144
+We could say,                   
+let any variable name we want.  
+
+31
+00:01:52,146 --> 00:01:54,713
+That's gonna be the variable    
+that has the error in it.       
+
+32
+00:01:54,715 --> 00:01:57,916
+And then in that curly brace,   
+we handle the error. And        
+
+33
+00:01:57,918 --> 00:02:00,719
+then after we've handled it,    
+our code continues. So          
+
+34
+00:02:00,721 --> 00:02:03,856
+we caught the error, we deal    
+with it, we keep going.         
+
+35
+00:02:03,858 --> 00:02:07,493
+It did, if we want to, and      
+if our function throws,         
+
+36
+00:02:07,495 --> 00:02:11,330
+we could re-throw the error by  
+using the keyword throw there,  
+
+37
+00:02:11,332 --> 00:02:16,435
+in our second, little curly     
+brace space. Now this error     
+
+38
+00:02:16,437 --> 00:02:20,372
+that gets thrown to you, it     
+does have to be of a certain    
+
+39
+00:02:20,374 --> 00:02:24,610
+type. The type is called        
+error. It's a protocol,         
+
+40
+00:02:24,612 --> 00:02:28,147
+which I'm gonna talk about      
+later in this lecture, but      
+
+41
+00:02:28,149 --> 00:02:30,015
+it's a pretty                   
+simple little type.             
+
+42
+00:02:30,017 --> 00:02:33,719
+And in UIKit, when UIKit        
+methods throw an error,         
+
+43
+00:02:33,721 --> 00:02:36,622
+they throw an error of          
+this type NSError. So           
+
+44
+00:02:36,624 --> 00:02:40,959
+you can go take a look in the   
+documentation for NSError and   
+
+45
+00:02:40,961 --> 00:02:45,464
+see what an NSError is. It has  
+an error code, it has an error  
+
+46
+00:02:45,466 --> 00:02:49,101
+domain, like where              
+the error occurred. And it,     
+
+47
+00:02:49,103 --> 00:02:53,238
+even has some things like a     
+description of what happened,   
+
+48
+00:02:53,240 --> 00:02:56,308
+why it failed,                  
+things like that.               
+
+49
+00:02:56,310 --> 00:02:59,678
+Now, sometimes we call          
+a function that throws,         
+
+50
+00:02:59,680 --> 00:03:04,216
+and we know for sure it's       
+not going to fail. This is      
+
+51
+00:03:04,218 --> 00:03:08,921
+rare that we know this, but     
+if we're certain about it,      
+
+52
+00:03:08,923 --> 00:03:13,725
+we can use another version of   
+try, which is try! And just     
+
+53
+00:03:13,727 --> 00:03:17,496
+like exclamation point means    
+to force it in an optional,     
+
+54
+00:03:17,498 --> 00:03:21,333
+exclamation point here means    
+to force it essentially.        
+
+55
+00:03:21,335 --> 00:03:24,136
+And if we call                  
+context.save() right here,      
+
+56
+00:03:24,138 --> 00:03:27,940
+whatever that function is,      
+if we call it and it throws,    
+
+57
+00:03:27,942 --> 00:03:30,842
+our app will crash, okay.       
+That's what the try!            
+
+58
+00:03:30,844 --> 00:03:35,013
+means. It means try, I know     
+this is not going to throw.     
+
+59
+00:03:35,015 --> 00:03:38,283
+If it does, crash my app.       
+There's yet                     
+
+60
+00:03:38,285 --> 00:03:43,155
+another try though,             
+which is try?. Try?             
+
+61
+00:03:43,157 --> 00:03:48,060
+means try to call this          
+method that throws, and         
+
+62
+00:03:48,062 --> 00:03:51,763
+if it does throw,               
+just give me back nil.          
+
+63
+00:03:52,398 --> 00:03:52,598
+Well, for                       
+
+64
+00:03:52,600 --> 00:03:55,367
+that to work of course,         
+the variable that we're         
+
+65
+00:03:55,369 --> 00:03:59,571
+assigning the result of this    
+method, I called this one,      
+
+66
+00:03:59,573 --> 00:04:03,408
+errorProneFunctionThatReturns-  
+AnInt. Whatever that returns,   
+
+67
+00:04:03,410 --> 00:04:06,144
+it's now gonna return           
+an optional version of that.    
+
+68
+00:04:06,146 --> 00:04:08,447
+So error prone function         
+that returns an int,            
+
+69
+00:04:08,449 --> 00:04:10,349
+returns an int obviously.       
+But x,                          
+
+70
+00:04:10,351 --> 00:04:14,553
+this let x =, that x is         
+gonna be an optional int for    
+
+71
+00:04:14,555 --> 00:04:17,422
+obvious reasons because if      
+error prone function return     
+
+72
+00:04:17,424 --> 00:04:22,227
+an int throws, it has to throw  
+nil back at us, okay? So        
+
+73
+00:04:22,229 --> 00:04:26,999
+that's what try? is. Try?       
+is give it a try, if it fails,  
+
+74
+00:04:27,001 --> 00:04:30,202
+just give me back nil. If I     
+do this try, I don't get to     
+
+75
+00:04:30,204 --> 00:04:32,037
+look at the error.              
+I don't know what it is.        
+
+76
+00:04:32,039 --> 00:04:36,408
+I'm ignoring the error here.    
+I know there was an error, but  
+
+77
+00:04:36,410 --> 00:04:41,313
+that's all I know in the try?   
+case. So it's a very simple     
+
+78
+00:04:41,315 --> 00:04:43,882
+error mechanism that            
+works quite well.               
+
+79
+00:04:43,884 --> 00:04:47,619
+In Swift they really learned    
+the lessons of some other       
+
+80
+00:04:47,621 --> 00:04:51,690
+languages that have more        
+overwrought, over complicated   
+
+81
+00:04:51,692 --> 00:04:55,627
+throwing of errors that are     
+throwing up call stacks and     
+
+82
+00:04:55,629 --> 00:04:59,264
+all these things, Swift         
+is very straight forward,       
+
+83
+00:04:59,266 --> 00:05:03,201
+sees the entirety of the error  
+processing, all right?          
+
+84
+00:05:03,203 --> 00:05:06,405
+Now, another completely         
+different topic, extensions.    
+
+85
+00:05:06,407 --> 00:05:10,942
+So, an extension allows you     
+to add a method or a var,       
+
+86
+00:05:10,944 --> 00:05:15,013
+even, to another class or       
+structure enum, that you may    
+
+87
+00:05:15,015 --> 00:05:18,483
+not even have the code to,      
+okay, it's called extension     
+
+88
+00:05:18,485 --> 00:05:22,688
+because it extends that class.  
+So, here's a concrete example,  
+
+89
+00:05:22,690 --> 00:05:25,557
+I hope you understand why       
+we might use an extension.      
+
+90
+00:05:25,559 --> 00:05:28,193
+Remember when we did            
+our app last time and           
+
+91
+00:05:28,195 --> 00:05:32,030
+we went to our Storyboard and   
+we wrapped the detail of        
+
+92
+00:05:32,032 --> 00:05:35,233
+the split view in               
+a navigation controller and     
+
+93
+00:05:35,235 --> 00:05:37,903
+it broke our code.              
+Right, it broke our code and    
+
+94
+00:05:37,905 --> 00:05:40,305
+prepare for segue because       
+that code was looking for       
+
+95
+00:05:40,307 --> 00:05:43,275
+a Face View controller and it   
+found a navigation controller   
+
+96
+00:05:43,277 --> 00:05:46,511
+instead. And the way we fix     
+that is we just look to see if  
+
+97
+00:05:46,513 --> 00:05:49,081
+it was navigation controller    
+first. And if it was, we look   
+
+98
+00:05:49,083 --> 00:05:51,983
+at the visible view controller  
+of the navigation controller,   
+
+99
+00:05:51,985 --> 00:05:55,387
+now we have our Face View       
+controller back again. Now,     
+
+100
+00:05:55,389 --> 00:06:00,025
+we could put that code into an  
+extension of UIViewController   
+
+101
+00:06:00,027 --> 00:06:03,061
+by creating a new var,          
+you can see it right here       
+
+102
+00:06:03,063 --> 00:06:05,731
+called contentViewController,   
+we can call the new var         
+
+103
+00:06:05,733 --> 00:06:08,600
+anything we want, I like        
+contentViewController cuz       
+
+104
+00:06:08,602 --> 00:06:11,002
+if it's a navigation            
+controller, it's the content.   
+
+105
+00:06:11,004 --> 00:06:13,538
+If it's not a navigation        
+controller, it's just self.     
+
+106
+00:06:13,540 --> 00:06:14,539
+It's the view                   
+controller itself.              
+
+107
+00:06:14,541 --> 00:06:18,543
+It's its own content.           
+And so I can add this, so       
+
+108
+00:06:18,545 --> 00:06:22,214
+I'm adding this var actually    
+to UIViewController. So now     
+
+109
+00:06:22,216 --> 00:06:27,018
+UIViewController understands    
+this var, it has this new var.  
+
+110
+00:06:27,020 --> 00:06:30,155
+Now I didn't subclass           
+UIViewController to do it,      
+
+111
+00:06:30,157 --> 00:06:32,057
+I just extended                 
+UIViewController. So            
+
+112
+00:06:32,059 --> 00:06:35,694
+you UIViewController and all    
+subclasses of UIViewController  
+
+113
+00:06:35,696 --> 00:06:39,364
+will now have this var. And it  
+makes that code that we had in  
+
+114
+00:06:39,366 --> 00:06:41,900
+prepare, which looks            
+something like this,            
+
+115
+00:06:41,902 --> 00:06:44,603
+the green part is               
+the same in both places.        
+
+116
+00:06:44,605 --> 00:06:46,671
+It changes that code            
+with all that to                
+
+117
+00:06:46,673 --> 00:06:52,077
+just this simple line of code.  
+The segue's destination,        
+
+118
+00:06:52,079 --> 00:06:57,783
+contentViewController as my     
+MVC. I think that slide says    
+
+119
+00:06:57,785 --> 00:06:59,851
+destinationViewController-      
+that should be                  
+
+120
+00:06:59,853 --> 00:07:04,289
+segue.destination.contentView-  
+Controller there. So,           
+
+121
+00:07:04,291 --> 00:07:07,859
+it just cleans up our code and  
+prepare for segue. But          
+
+122
+00:07:07,861 --> 00:07:10,195
+the extension that we           
+have UIViewControllers,         
+
+123
+00:07:10,197 --> 00:07:11,530
+purely a UIViewController       
+thing.                          
+
+124
+00:07:11,532 --> 00:07:14,266
+It has nothing to do with our   
+emotions view controller,       
+
+125
+00:07:14,268 --> 00:07:17,035
+anything like that. We purely   
+extended UIViewController to    
+
+126
+00:07:17,037 --> 00:07:22,441
+have new functionality. Now,    
+extensions inside their code,   
+
+127
+00:07:22,443 --> 00:07:25,510
+they can refer to self.         
+And when they refer to self,    
+
+128
+00:07:25,512 --> 00:07:28,447
+they mean the class they're     
+in. And so in this case,        
+
+129
+00:07:28,449 --> 00:07:30,615
+the self means                  
+the UIViewController that       
+
+130
+00:07:30,617 --> 00:07:32,617
+is executing this var           
+which makes sense,              
+
+131
+00:07:32,619 --> 00:07:36,888
+right? There's some             
+restrictions though with these  
+
+132
+00:07:36,890 --> 00:07:40,926
+extensions. So extensions       
+are not a substitute for        
+
+133
+00:07:40,928 --> 00:07:43,462
+everything object oriented      
+like subclassing and            
+
+134
+00:07:43,464 --> 00:07:46,898
+things like that. One thing is  
+that you can't re-implement     
+
+135
+00:07:46,900 --> 00:07:50,702
+something that already is in    
+there. So, you can't override   
+
+136
+00:07:50,704 --> 00:07:54,506
+or subclass with extensions.    
+You can only add new things     
+
+137
+00:07:54,508 --> 00:07:57,509
+that aren't there. And in       
+fact, if UIViewController were  
+
+138
+00:07:57,511 --> 00:08:00,378
+to have implemented this        
+var contentViewController,      
+
+139
+00:08:00,380 --> 00:08:03,014
+its version would win-          
+the extension with not win.     
+
+140
+00:08:03,016 --> 00:08:05,817
+In fact, it might even get      
+an error when you try to add    
+
+141
+00:08:05,819 --> 00:08:07,886
+an extension to                 
+something already there.        
+
+142
+00:08:07,888 --> 00:08:09,387
+So its not our replacing or     
+overriding or                   
+
+143
+00:08:09,389 --> 00:08:12,424
+anything like that, it's for    
+adding new things. And a huge   
+
+144
+00:08:12,426 --> 00:08:18,763
+restriction to extensions is    
+they cannot have any storage.   
+
+145
+00:08:19,899 --> 00:08:24,503
+The only vars an extension can  
+have have to be computed vars.  
+
+146
+00:08:24,505 --> 00:08:26,638
+They can't have any             
+stored vars, okay,              
+
+147
+00:08:26,640 --> 00:08:29,741
+extensions have no storage.     
+They are purely for             
+
+148
+00:08:29,743 --> 00:08:34,846
+adding code, all right. Now,    
+this feature of extensions is   
+
+149
+00:08:34,848 --> 00:08:38,316
+easily abused especially        
+by beginners to Swift.          
+
+150
+00:08:38,318 --> 00:08:41,119
+They start saying, cool,        
+I'll just add this code and     
+
+151
+00:08:41,121 --> 00:08:42,487
+extension here,                 
+I'll add new code and           
+
+152
+00:08:42,489 --> 00:08:44,456
+an extension there and          
+I'll add it over there.         
+
+153
+00:08:44,458 --> 00:08:47,392
+And you start getting this      
+kind of messy situation where   
+
+154
+00:08:47,394 --> 00:08:48,960
+the extensions don't            
+really make sense for           
+
+155
+00:08:48,962 --> 00:08:52,163
+the class you added them to.    
+So I'm gonna suggest that you   
+
+156
+00:08:52,165 --> 00:08:54,933
+be kind of go slow and          
+steady with the extensions.     
+
+157
+00:08:54,935 --> 00:08:58,737
+Don't use them too much. Now    
+having said that, extensions    
+
+158
+00:08:58,739 --> 00:09:02,908
+can be super powerful for       
+architecting your code well.    
+
+159
+00:09:02,910 --> 00:09:05,610
+Okay, especially when I start   
+talking about protocols.        
+
+160
+00:09:05,612 --> 00:09:08,013
+They can be a fundamental       
+aspect of building              
+
+161
+00:09:08,015 --> 00:09:11,249
+like a functional programming   
+approach to building your app.  
+
+162
+00:09:11,251 --> 00:09:14,352
+But I don't have time to        
+teach all that to you. So       
+
+163
+00:09:14,354 --> 00:09:16,254
+you're only gonna know enough   
+
+164
+00:09:16,256 --> 00:09:17,222
+about extensions                
+to get yourself in              
+
+165
+00:09:17,224 --> 00:09:20,358
+a little bit of trouble. So be  
+careful with extensions, okay?  
+
+166
+00:09:20,360 --> 00:09:22,561
+Use them lightly. But           
+in the future when you start    
+
+167
+00:09:22,563 --> 00:09:25,530
+a becoming serious iOS          
+developer someday you're gonna  
+
+168
+00:09:25,532 --> 00:09:27,799
+wanna learn how and             
+you can use extensions to your  
+
+169
+00:09:27,801 --> 00:09:33,204
+advantage without abusing       
+them, all right? Next topic,    
+
+170
+00:09:33,206 --> 00:09:37,909
+protocols, super,               
+duper important topic here.     
+
+171
+00:09:37,911 --> 00:09:40,378
+How many people have            
+encountered protocols in        
+
+172
+00:09:40,380 --> 00:09:45,317
+other languages? Nobody, see?   
+Well, one or two people.        
+
+173
+00:09:45,319 --> 00:09:48,987
+So it surprises me a little     
+bit, but, protocols,            
+
+174
+00:09:48,989 --> 00:09:53,425
+while very simple, are also     
+incredibly powerful. So,        
+
+175
+00:09:53,427 --> 00:09:57,162
+a protocol is a way             
+to declare a type               
+
+176
+00:09:57,164 --> 00:10:01,099
+that really just means these    
+methods and vars with no        
+
+177
+00:10:01,101 --> 00:10:05,670
+implementation generally.       
+That's what a protocol is.      
+
+178
+00:10:05,672 --> 00:10:09,708
+A protocol, as you'll see, is   
+a type. But you're essentially  
+
+179
+00:10:09,710 --> 00:10:13,578
+just defining a few methods.    
+Or even some vars,              
+
+180
+00:10:13,580 --> 00:10:16,815
+that are part of this           
+protocol. Then we're gonna use  
+
+181
+00:10:16,817 --> 00:10:19,851
+the protocol, as you'll see,    
+to define our APIs better.      
+
+182
+00:10:19,853 --> 00:10:25,390
+It allows you to create an API  
+that lets the callers pass      
+
+183
+00:10:25,392 --> 00:10:29,427
+anything they want- any class,  
+or struct, or enum even,        
+
+184
+00:10:29,429 --> 00:10:33,765
+they want to this API that you  
+create. But it allows you,      
+
+185
+00:10:33,767 --> 00:10:37,936
+who's receiving it,             
+to ensure that that class, or   
+
+186
+00:10:37,938 --> 00:10:40,271
+enum, or struct,                
+implements certain methods or   
+
+187
+00:10:40,273 --> 00:10:44,142
+vars that you need. So          
+that's what this is all about.  
+
+188
+00:10:44,144 --> 00:10:46,811
+It's about API design.          
+We want to build API so         
+
+189
+00:10:46,813 --> 00:10:50,115
+we can express in our API       
+exactly what we want and        
+
+190
+00:10:50,117 --> 00:10:53,151
+no more. Okay, just the         
+methods and vars we need to do  
+
+191
+00:10:53,153 --> 00:10:56,154
+whatever this function is       
+going to do or whatever, and    
+
+192
+00:10:56,156 --> 00:11:00,425
+not extra stuff. So, a          
+protocol is just a collection   
+
+193
+00:11:00,427 --> 00:11:02,861
+of method and                   
+property declarations.          
+
+194
+00:11:02,863 --> 00:11:06,531
+That's what a protocol is.      
+But a protocol is a type. It's  
+
+195
+00:11:06,533 --> 00:11:10,068
+a full fledged type. It serves  
+any place you can use a type,   
+
+196
+00:11:10,070 --> 00:11:14,305
+like a float. You can use       
+a type that's a protocol.       
+
+197
+00:11:14,307 --> 00:11:18,076
+Protocols are first-class       
+types. Absolutely first-class   
+
+198
+00:11:18,078 --> 00:11:22,514
+types. The implementation of    
+the methods and vars under      
+
+199
+00:11:22,516 --> 00:11:25,750
+protocol, since a protocol is   
+just the declaration of them,   
+
+200
+00:11:25,752 --> 00:11:28,353
+where does the implementation   
+happen? Well, mostly            
+
+201
+00:11:28,355 --> 00:11:32,390
+it happens in classes and       
+structs and enum that claim to  
+
+202
+00:11:32,392 --> 00:11:35,760
+implement that protocol, or     
+conform to that protocol,       
+
+203
+00:11:35,762 --> 00:11:38,730
+we say. So if I'm a struct,     
+and I wanna say yes,            
+
+204
+00:11:38,732 --> 00:11:42,300
+I wanna conform to protocol x,  
+then I have to implement        
+
+205
+00:11:42,302 --> 00:11:45,937
+all the methods in vars that    
+are in protocol x, right?       
+
+206
+00:11:45,939 --> 00:11:47,872
+Cuz protocol x is just          
+a declaration of them,          
+
+207
+00:11:47,874 --> 00:11:49,441
+it's not an implementation.     
+Now,                            
+
+208
+00:11:49,443 --> 00:11:53,611
+you can also do implementation  
+on a protocol in an extension,  
+
+209
+00:11:53,613 --> 00:11:55,780
+but I'm going to put that       
+on the shelf for second and     
+
+210
+00:11:55,782 --> 00:11:57,982
+talk about that in              
+a few more slides. But          
+
+211
+00:11:57,984 --> 00:12:01,486
+primarily protocols,            
+implementation happens in       
+
+212
+00:12:01,488 --> 00:12:03,988
+conforming or                   
+implementing classes,           
+
+213
+00:12:03,990 --> 00:12:09,227
+structs and enums. Now,         
+the three parts to a protocol.  
+
+214
+00:12:09,229 --> 00:12:10,795
+One is the declaration          
+of the protocol.                
+
+215
+00:12:10,797 --> 00:12:13,231
+That's really simple. It looks  
+just like declaring a class,    
+
+216
+00:12:13,233 --> 00:12:15,767
+a struct or an enum.            
+But there's no implementation,  
+
+217
+00:12:15,769 --> 00:12:19,237
+okay. The second part is        
+the class or structure or       
+
+218
+00:12:19,239 --> 00:12:22,507
+enum that claims to             
+conform to that protocol.       
+
+219
+00:12:22,509 --> 00:12:24,776
+That claims that it             
+implements that protocol. And   
+
+220
+00:12:24,778 --> 00:12:27,479
+then of course there's the      
+actual code that that class,    
+
+221
+00:12:27,481 --> 00:12:30,749
+struct, or enum, that claims    
+to implement the protocol,      
+
+222
+00:12:30,751 --> 00:12:32,784
+actually does implement         
+the protocol. So that's it,     
+
+223
+00:12:32,786 --> 00:12:34,652
+those are the three part        
+of using a protocol.            
+
+224
+00:12:34,654 --> 00:12:39,424
+Both the declaration and        
+then the implementation. Now,   
+
+225
+00:12:39,426 --> 00:12:41,960
+I'm gonna talk about            
+a feature with protocols,       
+
+226
+00:12:41,962 --> 00:12:44,429
+called optional methods.        
+This is not optional,           
+
+227
+00:12:44,431 --> 00:12:46,765
+like the optional type.         
+This is different optional.     
+
+228
+00:12:46,767 --> 00:12:50,602
+It means that the methods in    
+the protocol, are optional,     
+
+229
+00:12:50,604 --> 00:12:51,970
+you don't have to               
+implement them, and             
+
+230
+00:12:51,972 --> 00:12:54,739
+you can still say that you      
+implement this protocol.        
+
+231
+00:12:54,741 --> 00:12:57,776
+Now this is an Objective-C      
+thing. This is not a really     
+
+232
+00:12:57,778 --> 00:13:00,812
+a Swift thing. In swift when    
+you have a protocol and         
+
+233
+00:13:00,814 --> 00:13:03,148
+it has a bunch of methods       
+in it, if you're struct or      
+
+234
+00:13:03,150 --> 00:13:05,950
+class and you wanna say you     
+implemented that protocol,      
+
+235
+00:13:05,952 --> 00:13:08,186
+you have to implement           
+all of them,                    
+
+236
+00:13:08,188 --> 00:13:12,724
+all right. In Objective-C       
+though that's not true,         
+
+237
+00:13:12,726 --> 00:13:15,593
+in Objective-C some of the      
+methods might be optional and   
+
+238
+00:13:15,595 --> 00:13:18,897
+in which case you can claim     
+to implement the protocol and   
+
+239
+00:13:18,899 --> 00:13:22,801
+not implement those. So, if we  
+have a protocol that has these  
+
+240
+00:13:22,803 --> 00:13:25,203
+optional things in it,          
+it has to be marked objc.       
+
+241
+00:13:25,205 --> 00:13:29,374
+So you put this little @objc    
+before the word protocol, and   
+
+242
+00:13:29,376 --> 00:13:31,676
+that says this is               
+an Objective-C protocol. And    
+
+243
+00:13:31,678 --> 00:13:34,145
+then inside the declaration     
+you can put the word            
+
+244
+00:13:34,147 --> 00:13:38,082
+"optional" in front of any      
+funcs or var that you want to   
+
+245
+00:13:38,084 --> 00:13:42,987
+make optional. So this is       
+going to be used for something  
+
+246
+00:13:42,989 --> 00:13:44,823
+called delegation which I'm     
+gonna talk about in a few       
+
+247
+00:13:44,825 --> 00:13:48,793
+slides which is an Objective-C  
+thing that is brought forward.  
+
+248
+00:13:48,795 --> 00:13:51,830
+Because it's in UIKit so        
+extensively it's brought        
+
+249
+00:13:51,832 --> 00:13:56,167
+forward into Swift using        
+this @objc protocol, okay?      
+
+250
+00:13:56,169 --> 00:13:59,037
+But back to protocols in        
+general. So let's take a look   
+
+251
+00:13:59,039 --> 00:14:00,438
+at what a protocol              
+looks like to declare.          
+
+252
+00:14:00,440 --> 00:14:04,576
+So here's the declaration of a  
+protocol called SomeProtocol.   
+
+253
+00:14:04,578 --> 00:14:06,945
+And you can see it looks        
+just like declaring a class,    
+
+254
+00:14:06,947 --> 00:14:08,112
+a struct, or an enum, right.    
+
+255
+00:14:08,114 --> 00:14:10,682
+You got the keyword which is    
+protocol instead of class,      
+
+256
+00:14:10,684 --> 00:14:13,284
+struct, or enum.                
+Then you got the name.          
+
+257
+00:14:13,286 --> 00:14:18,957
+Now after that though there's   
+a colon, and other protocols.   
+
+258
+00:14:18,959 --> 00:14:22,193
+These protocols are called      
+inherited protocols.            
+
+259
+00:14:22,195 --> 00:14:25,230
+Some protocol inherits          
+these two protocols. And        
+
+260
+00:14:25,232 --> 00:14:27,899
+what it means is that anyone    
+who wants to say yeah,          
+
+261
+00:14:27,901 --> 00:14:29,000
+I implement some protocol,      
+
+262
+00:14:29,002 --> 00:14:30,134
+they have to                    
+implement those too.            
+
+263
+00:14:30,136 --> 00:14:32,670
+Okay, they're doing all         
+three of these protocols.       
+
+264
+00:14:32,672 --> 00:14:35,807
+Some protocol, and              
+its two inherited protocols.    
+
+265
+00:14:35,809 --> 00:14:40,778
+So protocols essentially have   
+multiple inheritance. How many  
+
+266
+00:14:40,780 --> 00:14:44,315
+people know what multiple       
+inheritance is in object        
+
+267
+00:14:44,317 --> 00:14:46,651
+oriented? So only a few of      
+you. So multiple inheritance    
+
+268
+00:14:46,653 --> 00:14:48,686
+just means like you could       
+have two super classes, or      
+
+269
+00:14:48,688 --> 00:14:51,856
+three super classes.            
+Some languages support that.    
+
+270
+00:14:51,858 --> 00:14:55,493
+Swift does not. But             
+Swift does support multiple     
+
+271
+00:14:55,495 --> 00:14:59,597
+protocols that you can          
+inherit from, okay?             
+
+272
+00:14:59,599 --> 00:15:03,601
+Now, the protocol inside,       
+you can have properties and     
+
+273
+00:15:03,603 --> 00:15:08,339
+you can have funcs. And         
+if you have a var, a property,  
+
+274
+00:15:08,341 --> 00:15:11,142
+you have to say whether         
+it's a get set property or      
+
+275
+00:15:11,144 --> 00:15:13,978
+there's just get only and you   
+do that in a curly brace get    
+
+276
+00:15:13,980 --> 00:15:17,348
+set. Curly brace get.           
+So you have to put that curly   
+
+277
+00:15:17,350 --> 00:15:20,618
+brace something in there that   
+says whether you're gonna be    
+
+278
+00:15:20,620 --> 00:15:25,957
+a get set var or whether        
+you're just a get-only var.     
+
+279
+00:15:25,959 --> 00:15:31,329
+Any function that the protocol  
+expects would mutate the thing  
+
+280
+00:15:31,331 --> 00:15:34,832
+implementing it, like if        
+a struct were implementing it,  
+
+281
+00:15:34,834 --> 00:15:38,903
+you have to mark it mutating.   
+Now if a class were to          
+
+282
+00:15:38,905 --> 00:15:40,838
+implement this protocol,        
+it wouldn't matter,             
+
+283
+00:15:40,840 --> 00:15:43,875
+classes don't have to           
+mark themselves mutating.       
+
+284
+00:15:43,877 --> 00:15:45,710
+And in fact it's even           
+possible to say,                
+
+285
+00:15:45,712 --> 00:15:48,713
+I want this protocol only to    
+be implemented by classes.      
+
+286
+00:15:48,715 --> 00:15:51,382
+And you do that by putting      
+the word class right after      
+
+287
+00:15:51,384 --> 00:15:54,652
+the colon. See the yellow       
+class right there SomeProtocol  
+
+288
+00:15:54,654 --> 00:15:57,422
+: class- that means this        
+SomeProtocol can only be        
+
+289
+00:15:57,424 --> 00:15:58,489
+implemented by                  
+reference types. And            
+
+290
+00:15:58,491 --> 00:16:01,459
+in that case you don't have to  
+put any mutatin's in there.     
+
+291
+00:16:01,461 --> 00:16:03,294
+But if you are gonna            
+allow your protocol to          
+
+292
+00:16:03,296 --> 00:16:05,930
+be implemented by an enum,      
+or especially by a struct,      
+
+293
+00:16:05,932 --> 00:16:09,934
+obviously you're gonna have     
+to put mutating in there.       
+
+294
+00:16:10,736 --> 00:16:15,373
+You can also specify in         
+a protocol initializers.        
+
+295
+00:16:15,375 --> 00:16:15,673
+You're basically saying,        
+
+296
+00:16:15,675 --> 00:16:18,209
+anyone who wants to implement   
+this SomeProtocol has to be be  
+
+297
+00:16:18,211 --> 00:16:22,747
+able to be initialized with     
+these arguments, all right?     
+
+298
+00:16:22,749 --> 00:16:26,217
+If you do that, by the way,     
+and you're a class,             
+
+299
+00:16:26,219 --> 00:16:31,189
+okay, then you have to mark     
+the initializer required. I'll  
+
+300
+00:16:31,191 --> 00:16:36,728
+show you that in a second. All  
+right, so how does a class or   
+
+301
+00:16:36,730 --> 00:16:41,499
+a struct or an enum say yes,    
+I implement SomeProtocol?       
+
+302
+00:16:41,501 --> 00:16:45,269
+It does it this way. A class,   
+right after its superclass,     
+
+303
+00:16:45,271 --> 00:16:47,505
+just puts a comma and           
+the protocols'll do this.       
+
+304
+00:16:47,507 --> 00:16:50,141
+And you can implement any       
+number of protocols there.      
+
+305
+00:16:50,143 --> 00:16:52,977
+So this class called            
+SomeClass has a SuperClass,     
+
+306
+00:16:52,979 --> 00:16:56,180
+it's called SuperClass of some  
+class, and it also implements   
+
+307
+00:16:56,182 --> 00:16:59,917
+two protocols, SomeProtocol     
+and AnotherProtocol.            
+
+308
+00:16:59,919 --> 00:17:02,487
+Now inside of SomeClass'        
+implementations it must         
+
+309
+00:17:02,489 --> 00:17:06,190
+implement all the methods and   
+vars in those two protocols     
+
+310
+00:17:06,192 --> 00:17:08,793
+unless it's an Objective-C      
+protocol and they're marked     
+
+311
+00:17:08,795 --> 00:17:10,962
+optional. Okay, the methods     
+in there are marked optional.   
+
+312
+00:17:10,964 --> 00:17:15,333
+That's the only exception to    
+that. All right. Structs or     
+
+313
+00:17:15,335 --> 00:17:18,770
+enums. Exactly the same, it's   
+just they have no superclass.   
+
+314
+00:17:18,772 --> 00:17:21,305
+So here's an enum saying,       
+that it implements those two    
+
+315
+00:17:21,307 --> 00:17:24,108
+protocols, okay? And here       
+is a struct saying that it      
+
+316
+00:17:24,110 --> 00:17:26,544
+implements those                
+two protocols. Now,             
+
+317
+00:17:26,546 --> 00:17:31,315
+you can have any number of      
+protocols implemented. And      
+
+318
+00:17:31,317 --> 00:17:34,419
+as I said, inits have to be     
+required. The reason that       
+
+319
+00:17:34,421 --> 00:17:37,088
+these inits have to be          
+required here is that,          
+
+320
+00:17:37,090 --> 00:17:41,125
+what if a subclass, subclass    
+is SomeClass right there, and   
+
+321
+00:17:41,127 --> 00:17:44,228
+it does all the initial         
+exation games such as,          
+
+322
+00:17:44,230 --> 00:17:46,898
+this is no longer               
+a good intializer.              
+
+323
+00:17:46,900 --> 00:17:47,598
+Because maybe this              
+was required.                   
+
+324
+00:17:47,600 --> 00:17:49,367
+You need an initializer,        
+you need an override, so        
+
+325
+00:17:49,369 --> 00:17:51,335
+now you have your own new       
+designated initializer,         
+
+326
+00:17:51,337 --> 00:17:53,938
+et cetera. Well, that would be  
+bad, because that would mean    
+
+327
+00:17:53,940 --> 00:17:57,175
+the subclass of SomeClass       
+would no longer conform to      
+
+328
+00:17:57,177 --> 00:17:59,811
+that protocol, and              
+that is not allowed.            
+
+329
+00:17:59,813 --> 00:18:02,814
+If a class conforms to          
+a protocol, like SomeProtocol,  
+
+330
+00:18:02,816 --> 00:18:05,650
+all of its subclasses have      
+to continue to do that. And     
+
+331
+00:18:05,652 --> 00:18:09,487
+they'll inherit that from the   
+superclass except for init,     
+
+332
+00:18:09,489 --> 00:18:12,990
+are the one thing that can be   
+uninherited by the rules of     
+
+333
+00:18:12,992 --> 00:18:18,429
+init. Okay? One thing that's    
+very interesting is that you    
+
+334
+00:18:18,431 --> 00:18:21,265
+are allowed to add protocol     
+conformance to a struct,        
+
+335
+00:18:21,267 --> 00:18:25,169
+a class, or an enum using an    
+extension. As long as you can   
+
+336
+00:18:25,171 --> 00:18:28,372
+do it without any storage. You  
+can do it in the extension.     
+
+337
+00:18:28,374 --> 00:18:31,409
+You just say, extension         
+Something, where Something is   
+
+338
+00:18:31,411 --> 00:18:34,145
+the class, struct or enum,      
+colon, SomeProtocol.            
+
+339
+00:18:34,147 --> 00:18:37,148
+And that saying, I'm creating   
+extension to that class,        
+
+340
+00:18:37,150 --> 00:18:39,851
+struct or enum that             
+implements this protocol.       
+
+341
+00:18:39,853 --> 00:18:40,651
+And then inside                 
+that extension,                 
+
+342
+00:18:40,653 --> 00:18:44,856
+you have to implement all the   
+methods of the protocol. Okay,  
+
+343
+00:18:44,858 --> 00:18:49,560
+understand what I'm             
+saying there? Let's             
+
+344
+00:18:49,562 --> 00:18:53,064
+talk about protocols being      
+types. What do I mean when I    
+
+345
+00:18:53,066 --> 00:18:55,933
+say a protocol is a type?       
+So, I got an example here.      
+
+346
+00:18:55,935 --> 00:18:58,569
+I've got a protocol             
+called Moveable and             
+
+347
+00:18:58,571 --> 00:19:01,305
+it just has one function in     
+it, a mutating function called  
+
+348
+00:19:01,307 --> 00:19:05,143
+move to point. Now, I have      
+two data structures here.       
+
+349
+00:19:05,145 --> 00:19:08,246
+One is a class called Car,      
+and it's Moveable.              
+
+350
+00:19:08,248 --> 00:19:11,849
+Okay, the Car is Moveable, but  
+the Car also has other methods  
+
+351
+00:19:11,851 --> 00:19:15,920
+like changeOil. You change      
+the oil of the car. And         
+
+352
+00:19:15,922 --> 00:19:17,922
+similarly I have this           
+struct called Shape.            
+
+353
+00:19:17,924 --> 00:19:21,092
+It also implements Moveabl.     
+Look, see, mutating func        
+
+354
+00:19:21,094 --> 00:19:23,694
+move to point. It actually      
+implements that. But it also    
+
+355
+00:19:23,696 --> 00:19:25,930
+has a function called draw.     
+Because it is a shape and       
+
+356
+00:19:25,932 --> 00:19:30,168
+it can be drawn on screen.      
+All right, so all               
+
+357
+00:19:31,770 --> 00:19:34,338
+two of these classes implement  
+this protocol move to.          
+
+358
+00:19:34,340 --> 00:19:38,342
+Do you see that? So do you see  
+that they're all moveable?      
+
+359
+00:19:38,344 --> 00:19:40,378
+Okay, a car is moveable.        
+A shape is moveable.            
+
+360
+00:19:40,380 --> 00:19:44,482
+That's how we would describe    
+those. So I created two little  
+
+361
+00:19:44,484 --> 00:19:47,718
+vars down here. A Prius,        
+which is of car of course,      
+
+362
+00:19:47,720 --> 00:19:50,188
+it equals a new car.            
+And then I created a square,    
+
+363
+00:19:50,190 --> 00:19:52,757
+which is a shape, of course.    
+So I've got a Prius and         
+
+364
+00:19:52,759 --> 00:19:55,259
+a square here. Let's see what   
+we can do with the Prius and    
+
+365
+00:19:55,261 --> 00:19:59,263
+the square. First, I can        
+create a var whose type is      
+
+366
+00:19:59,265 --> 00:20:04,802
+Moveable called thingToMove     
+and I can assign it to Prius.   
+
+367
+00:20:04,804 --> 00:20:08,339
+Because a Prius is moveable.    
+So if I have a var that         
+
+368
+00:20:08,341 --> 00:20:11,542
+is of type moveable, of course  
+a Prius can be put in there.    
+
+369
+00:20:11,544 --> 00:20:16,514
+Everyone understand that? And   
+I can even say, thingToMove,    
+
+370
+00:20:16,516 --> 00:20:19,951
+move to this point, because     
+thingToMove is a Moveable.      
+
+371
+00:20:19,953 --> 00:20:23,521
+So, if it's a Moveable, it has  
+to implement move to point. So  
+
+372
+00:20:23,523 --> 00:20:27,925
+I can say that. However,        
+I cannot say, thingToMove,      
+
+373
+00:20:27,927 --> 00:20:31,862
+change oil. This is the         
+critical thing to understand,   
+
+374
+00:20:31,864 --> 00:20:38,736
+okay? Even though I put         
+a Prius in thingToMove,         
+
+375
+00:20:38,738 --> 00:20:42,540
+that var is not a Car,          
+it's a Moveable.                
+
+376
+00:20:42,542 --> 00:20:46,010
+And moveables don't know how    
+to change the oil. Cars do.     
+
+377
+00:20:46,012 --> 00:20:50,481
+But moveables don't. So what    
+matters is the type when it     
+
+378
+00:20:50,483 --> 00:20:54,652
+comes to sending the messages,  
+not what's actually in there.   
+
+379
+00:20:54,853 --> 00:20:58,689
+Everyone understand that? Now,  
+of course, I could also say     
+
+380
+00:20:58,691 --> 00:21:01,692
+thingToMove = square. That's    
+perfectly legal as well. Okay,  
+
+381
+00:21:01,694 --> 00:21:03,828
+square is not even a class,     
+it's a struct. Okay,            
+
+382
+00:21:03,830 --> 00:21:06,864
+it's not a car, it's a shape.   
+But they're both moveable so    
+
+383
+00:21:06,866 --> 00:21:09,500
+that var thingToMove which      
+is of type Moveable can hold    
+
+384
+00:21:09,502 --> 00:21:12,069
+either of those things.         
+In fact, I can even create      
+
+385
+00:21:12,071 --> 00:21:17,275
+an array, thingsToMove, which   
+is an array of Moveable and     
+
+386
+00:21:17,277 --> 00:21:19,143
+then I can put a Prius and      
+a square both in there,         
+
+387
+00:21:19,145 --> 00:21:22,513
+even though they're             
+completely different classes,   
+
+388
+00:21:22,515 --> 00:21:23,614
+types of things.                
+
+389
+00:21:23,616 --> 00:21:26,450
+They can both go in there       
+cuz they're both moveables.     
+
+390
+00:21:26,452 --> 00:21:29,553
+So, the type of thing in        
+that array is Moveable.         
+
+391
+00:21:29,555 --> 00:21:32,957
+What it actually is,            
+doesn't matter. Okay,           
+
+392
+00:21:32,959 --> 00:21:36,994
+everyone cool with that?        
+All right, I could also have    
+
+393
+00:21:36,996 --> 00:21:39,797
+a function that takes           
+a Moveable as an argument,      
+
+394
+00:21:39,799 --> 00:21:43,534
+like slide that takes a slider  
+which is a Moveable, and        
+
+395
+00:21:43,536 --> 00:21:47,204
+I can say, slider move to that  
+position because the argument,  
+
+396
+00:21:47,206 --> 00:21:50,207
+slider, is a Moveable so        
+we can say move too. And        
+
+397
+00:21:50,209 --> 00:21:53,778
+I could say slide a Prius,      
+slide a square.                 
+
+398
+00:21:53,780 --> 00:21:57,782
+It works perfectly fine. By     
+the way you can have arguments  
+
+399
+00:21:57,784 --> 00:22:00,418
+to functions that require       
+multiple protocols.             
+
+400
+00:22:00,420 --> 00:22:02,153
+For example I could have        
+a function, slip and            
+
+401
+00:22:02,155 --> 00:22:07,058
+slide which has a parameter     
+x which is both Moveable,       
+
+402
+00:22:07,060 --> 00:22:08,993
+and another protocol,           
+which I haven't showed here,    
+
+403
+00:22:08,995 --> 00:22:11,696
+called Slippery. And that's     
+what the ampersand means.       
+
+404
+00:22:11,698 --> 00:22:13,698
+It means both of                
+these protocols. So             
+
+405
+00:22:13,700 --> 00:22:16,767
+that inside slipAndSlide, I     
+could send x Moveable things,   
+
+406
+00:22:16,769 --> 00:22:18,903
+like move to, and I could       
+also send it Slippery things,   
+
+407
+00:22:18,905 --> 00:22:22,640
+whatever those are. Note that   
+I can't say slipAndSlide        
+
+408
+00:22:22,642 --> 00:22:26,477
+Prius, because Prius does not   
+implement slippery, okay?       
+
+409
+00:22:26,479 --> 00:22:30,414
+Prius does not conform to the   
+Slippery protocol so cannot     
+
+410
+00:22:30,416 --> 00:22:34,118
+pass in there, Swift would      
+not even let me call that.      
+
+411
+00:22:34,120 --> 00:22:36,620
+Okay, everyone understand what  
+I mean now by a protocol as     
+
+412
+00:22:36,622 --> 00:22:40,124
+a type? It's just a type, and   
+anything that conforms to that  
+
+413
+00:22:40,126 --> 00:22:42,660
+type can be stored in           
+something, or passed through    
+
+414
+00:22:42,662 --> 00:22:46,163
+in something of that type. Now  
+I'm gonna take a couple slides  
+
+415
+00:22:46,165 --> 00:22:50,167
+here and talk about the         
+advanced use of protocols. I'm  
+
+416
+00:22:50,169 --> 00:22:53,504
+not gonna ask you to do that    
+in the nine or ten weeks we     
+
+417
+00:22:53,506 --> 00:22:56,640
+have here because it is kinda   
+advanced use. But I think it's  
+
+418
+00:22:56,642 --> 00:22:59,810
+important that you understand   
+that this exists because all    
+
+419
+00:22:59,812 --> 00:23:03,914
+of Swift's standard library,    
+arrays and dictionaries,        
+
+420
+00:23:03,916 --> 00:23:08,619
+all that stuff, is all          
+implemented using protocols.    
+
+421
+00:23:08,621 --> 00:23:12,123
+So, one thing that a protocol   
+can do that I'm not gonna ask   
+
+422
+00:23:12,125 --> 00:23:14,959
+you to do, is that it           
+can restrict the type           
+
+423
+00:23:14,961 --> 00:23:18,462
+of a generic. Everyone knows    
+what a generic is, right?       
+
+424
+00:23:18,464 --> 00:23:20,598
+An array of angle bracket t.    
+
+425
+00:23:20,600 --> 00:23:25,136
+It means the array can hold     
+any type in there. But that t,  
+
+426
+00:23:25,138 --> 00:23:28,072
+that array of t could be        
+restricted to things that       
+
+427
+00:23:28,074 --> 00:23:30,374
+implement a certain protocol.   
+So here's an example,           
+
+428
+00:23:30,376 --> 00:23:35,713
+which is range. When I showed   
+you range, a few lectures ago.  
+
+429
+00:23:35,715 --> 00:23:40,251
+I said it was sort              
+of Range<T>. Okay,              
+
+430
+00:23:40,253 --> 00:23:44,889
+the reason it was only sort     
+of Range<T> was because         
+
+431
+00:23:44,891 --> 00:23:48,726
+actually range bound or T       
+bound is just a variable name   
+
+432
+00:23:48,728 --> 00:23:51,595
+basically for that type,        
+colon comparable.               
+
+433
+00:23:51,597 --> 00:23:56,033
+Okay, so a range can only be a  
+range of things that implement  
+
+434
+00:23:56,035 --> 00:23:59,804
+the protocol Comparable.        
+Luckily ints implement          
+
+435
+00:23:59,806 --> 00:24:04,642
+Comparable. Floats implement    
+Comparable. Characters and      
+
+436
+00:24:04,644 --> 00:24:07,445
+strings implement Comparable,   
+etc. So these things all        
+
+437
+00:24:07,447 --> 00:24:10,181
+implement Comparable so         
+you can have a range of ints,   
+
+438
+00:24:10,183 --> 00:24:12,349
+a range of floats,              
+whatever. Now,                  
+
+439
+00:24:12,351 --> 00:24:16,654
+why does range want the thing   
+in its range to be comparable?  
+
+440
+00:24:16,656 --> 00:24:19,723
+Well it's because it wants to   
+make sure that its lower bound  
+
+441
+00:24:19,725 --> 00:24:22,259
+is always less than             
+its upper bound.                
+
+442
+00:24:22,461 --> 00:24:24,328
+I think on the other slide,     
+I said it was start index and   
+
+443
+00:24:24,330 --> 00:24:27,531
+end index. Which is actually    
+not range, the range struct,    
+
+444
+00:24:27,533 --> 00:24:30,968
+that's countable range, and     
+those kind of things have       
+
+445
+00:24:30,970 --> 00:24:35,506
+that. You rarely use            
+just a straight range.          
+
+446
+00:24:35,508 --> 00:24:37,007
+You're almost always using      
+the countable range,            
+
+447
+00:24:37,009 --> 00:24:40,478
+or closed countable range, or   
+one of those. But anyway, so    
+
+448
+00:24:40,480 --> 00:24:44,548
+that's why it wants the type    
+that it can be generic for      
+
+449
+00:24:44,550 --> 00:24:45,483
+to be Comparable. So            
+
+450
+00:24:45,485 --> 00:24:49,019
+being able to restrict this     
+generic types by some protocol  
+
+451
+00:24:49,021 --> 00:24:53,324
+is really super powerful.       
+Okay, because it allows you to  
+
+452
+00:24:53,326 --> 00:24:58,729
+build much a more wide variety  
+of generic data structures.     
+
+453
+00:24:58,731 --> 00:24:59,163
+Because you can make it so      
+
+454
+00:24:59,165 --> 00:25:01,999
+that they have to implement     
+certain things to work.         
+
+455
+00:25:02,001 --> 00:25:06,337
+All right. Now,                 
+also, you can use               
+
+456
+00:25:06,339 --> 00:25:10,708
+generics to declare protocols.  
+So you can have protocols,      
+
+457
+00:25:10,710 --> 00:25:15,913
+where the methods in vars       
+might be a generic type. So,    
+
+458
+00:25:15,915 --> 00:25:17,848
+now you can have these          
+protocols kind of meta.         
+
+459
+00:25:17,850 --> 00:25:20,818
+But you can have these          
+protocols that can be           
+
+460
+00:25:20,820 --> 00:25:24,922
+describing behavior that        
+can work on generic types.      
+
+461
+00:25:24,924 --> 00:25:27,558
+Or maybe work on generic        
+types that implement certain    
+
+462
+00:25:27,560 --> 00:25:31,395
+protocols. Now, this is         
+probably hard for you to        
+
+463
+00:25:31,397 --> 00:25:34,765
+imagine where this could go,    
+but it really can go.           
+
+464
+00:25:34,767 --> 00:25:37,902
+Okay, so you're really opening  
+up a lot of power here          
+
+465
+00:25:37,904 --> 00:25:41,972
+by adding generics. And         
+constraining these generics     
+
+466
+00:25:41,974 --> 00:25:46,010
+using protocols.                
+Again remember that you kind    
+
+467
+00:25:46,012 --> 00:25:48,746
+of get multiple inheritance     
+with protocols. And I'm         
+
+468
+00:25:48,748 --> 00:25:50,714
+going to show you an example    
+here with CountableRange.       
+
+469
+00:25:50,716 --> 00:25:54,618
+So CountableRange is the type   
+of struct you get if you use    
+
+470
+00:25:54,620 --> 00:25:59,356
+3..<5. Remember I showed you    
+that. Like if you're doing a 4  
+
+471
+00:25:59,358 --> 00:26:02,092
+in and you want to come         
+forward to 5 non inclusive,     
+
+472
+00:26:02,094 --> 00:26:04,895
+use three dot dot five you      
+get this countable range.       
+
+473
+00:26:04,897 --> 00:26:07,298
+Well, le's think what           
+CountableRange is.              
+
+474
+00:26:07,300 --> 00:26:11,001
+CountableRange is a struct      
+that implements a ton           
+
+475
+00:26:11,003 --> 00:26:11,969
+of protocols.                   
+
+476
+00:26:11,971 --> 00:26:13,604
+Here's some of the interesting  
+ones it implements.             
+
+477
+00:26:13,606 --> 00:26:17,908
+IndexableBase which gives it    
+start start index and end       
+
+478
+00:26:17,910 --> 00:26:20,978
+index which I showed you on     
+that slide kind of erroneously  
+
+479
+00:26:20,980 --> 00:26:25,249
+as Range, it also implements    
+this method index               
+
+480
+00:26:25,251 --> 00:26:27,918
+after. So, a range can move     
+forward cuz you can always      
+
+481
+00:26:27,920 --> 00:26:30,754
+find the next index.            
+And it also does subscripting,  
+
+482
+00:26:30,756 --> 00:26:34,425
+so you can take a range and     
+get subscript sub three, and    
+
+483
+00:26:34,427 --> 00:26:37,628
+it will get you the fourth      
+one in there. Right,            
+
+484
+00:26:37,630 --> 00:26:40,230
+so that protocol's called       
+IndexableBase. Then there's     
+
+485
+00:26:40,232 --> 00:26:43,233
+another protocol called         
+Indexable. Which actually       
+
+486
+00:26:43,235 --> 00:26:47,304
+inherits from IndexableBase     
+which has index offsetBy.       
+
+487
+00:26:47,306 --> 00:26:50,307
+So now you can move through     
+the range more than just to     
+
+488
+00:26:50,309 --> 00:26:53,077
+the next one,                   
+you can move farther ahead.     
+
+489
+00:26:53,079 --> 00:26:55,713
+There's also                    
+BidirectionalIndexable.         
+
+490
+00:26:55,715 --> 00:26:59,383
+Now you can go backwards,       
+index before, okay. So          
+
+491
+00:26:59,385 --> 00:27:02,052
+these things like startIndex,   
+index after, index offset,      
+
+492
+00:27:02,054 --> 00:27:05,789
+index before, these are just    
+methods in these protocols.     
+
+493
+00:27:05,991 --> 00:27:09,293
+It also implements this very    
+important protocol called       
+
+494
+00:27:09,295 --> 00:27:13,597
+Sequence. And the main method   
+in Sequence is makeIterator.    
+
+495
+00:27:13,599 --> 00:27:17,034
+Which gives back an object      
+that can do the for in thing.   
+
+496
+00:27:17,036 --> 00:27:19,770
+So a Range, that's why          
+Range works with for in,        
+
+497
+00:27:19,772 --> 00:27:23,307
+because it implements           
+the Sequence protocol. And      
+
+498
+00:27:23,309 --> 00:27:25,009
+it also implements              
+the Collection protocol.        
+
+499
+00:27:25,011 --> 00:27:27,811
+But Collection is primarily     
+just an indexable sequence.     
+
+500
+00:27:27,813 --> 00:27:30,314
+So it implements both those     
+protocols- things that          
+
+501
+00:27:30,316 --> 00:27:33,350
+are collections implement       
+both those protocols.           
+
+502
+00:27:33,352 --> 00:27:36,053
+So why does Apple go            
+to all the trouble              
+
+503
+00:27:36,055 --> 00:27:38,389
+to take something simple        
+like a CountableRange and       
+
+504
+00:27:38,391 --> 00:27:40,891
+make it implement all of        
+these ridiculous protocols?     
+
+505
+00:27:40,893 --> 00:27:44,995
+Well, here's why. Because       
+Array also implements all       
+
+506
+00:27:44,997 --> 00:27:48,565
+those protocols and so          
+there's Dictionary and Set and  
+
+507
+00:27:48,567 --> 00:27:52,069
+String.UTF16View. The thing     
+that will let you see Unicode   
+
+508
+00:27:52,071 --> 00:27:55,406
+characters in the string. All   
+of these things do. So they're  
+
+509
+00:27:55,408 --> 00:28:00,411
+all sharing the same basic API  
+description of their behavior.  
+
+510
+00:28:00,413 --> 00:28:01,578
+Even though they're             
+quite different.                
+
+511
+00:28:01,580 --> 00:28:04,381
+An array is quite different     
+from a range. A set             
+
+512
+00:28:04,383 --> 00:28:07,951
+is different than an array.     
+And certainly a, character,     
+
+513
+00:28:07,953 --> 00:28:11,121
+UTF16View, is different         
+than any of those things.       
+
+514
+00:28:11,123 --> 00:28:13,157
+They're dictionaries. So these  
+are all different things.       
+
+515
+00:28:13,159 --> 00:28:15,793
+But they share the behavior     
+of being indexable,             
+
+516
+00:28:15,795 --> 00:28:18,662
+being a sequence of things,     
+being collections of things,    
+
+517
+00:28:18,664 --> 00:28:19,463
+they share all that behavior.   
+
+518
+00:28:19,465 --> 00:28:23,000
+And so that's described with    
+these protocols and wait,       
+
+519
+00:28:23,002 --> 00:28:26,103
+there's more. Because of        
+this thing I told you that      
+
+520
+00:28:26,105 --> 00:28:29,506
+extensions can be used to       
+add code to a protocol,         
+
+521
+00:28:29,508 --> 00:28:32,342
+okay. Now there's restriction   
+there, of course, because both  
+
+522
+00:28:32,344 --> 00:28:35,979
+protocols and extensions        
+can have no storage.            
+
+523
+00:28:35,981 --> 00:28:37,414
+So if you extend                
+a protocol and                  
+
+524
+00:28:37,416 --> 00:28:39,116
+give it some actual             
+implementation,                 
+
+525
+00:28:39,118 --> 00:28:41,919
+by implementing some of         
+the methods in the protocol.    
+
+526
+00:28:41,921 --> 00:28:45,823
+You can only use other          
+methods in the protocol. Or     
+
+527
+00:28:45,825 --> 00:28:47,758
+methods you inherit             
+from other protocols,           
+
+528
+00:28:47,760 --> 00:28:49,793
+right?                          
+You can't use any storage.      
+
+529
+00:28:49,795 --> 00:28:51,161
+All you can do is call          
+other methods and vars. But     
+
+530
+00:28:51,163 --> 00:28:54,431
+you'd be surprised how much     
+you can do when you do that.    
+
+531
+00:28:54,433 --> 00:28:55,199
+And what that                   
+allows you to do,               
+
+532
+00:28:55,201 --> 00:28:59,403
+in this case, if you consider   
+Sequence. I told you that       
+
+533
+00:28:59,405 --> 00:29:01,638
+Sequence mostly just makes      
+you that makeIterator thing.    
+
+534
+00:29:01,640 --> 00:29:04,875
+So, you can for in through      
+the string characters or        
+
+535
+00:29:04,877 --> 00:29:08,946
+through the array or through    
+the range or whatever. Well,    
+
+536
+00:29:08,948 --> 00:29:12,583
+if you just implement that one  
+method, Apple has provided      
+
+537
+00:29:12,585 --> 00:29:16,019
+an extension to the Sequence    
+protocol. That implements two   
+
+538
+00:29:16,021 --> 00:29:18,722
+dozen other methods that are    
+based on being able to iterate  
+
+539
+00:29:18,724 --> 00:29:23,427
+through. Like contains, is      
+this thing contained in this    
+
+540
+00:29:23,429 --> 00:29:27,030
+Sequence? Or joined by          
+separator, which will take      
+
+541
+00:29:27,032 --> 00:29:30,100
+each thing in the sequence,     
+turn it into a string, and      
+
+542
+00:29:30,102 --> 00:29:33,036
+join it by whatever separator   
+you say, like a comma, and      
+
+543
+00:29:33,038 --> 00:29:36,440
+give you back a string.         
+Okay? Or min and max.           
+
+544
+00:29:36,442 --> 00:29:39,376
+What's the minimum thing,       
+or the maximum thing?           
+
+545
+00:29:39,378 --> 00:29:39,676
+Of course in that case,         
+
+546
+00:29:39,678 --> 00:29:42,546
+the sequence would have         
+to have what, comparable        
+
+547
+00:29:42,548 --> 00:29:46,083
+items? You have to be able to   
+compare them. If you're gonna   
+
+548
+00:29:46,085 --> 00:29:49,787
+do min or max. Even those       
+cool functions I told you,      
+
+549
+00:29:49,789 --> 00:29:52,790
+filter and map, remember        
+those? That took a closure and  
+
+550
+00:29:52,792 --> 00:29:55,492
+you were able to map an array   
+from one thing to another.      
+
+551
+00:29:55,494 --> 00:29:57,227
+You can do the same             
+thing with a range. And         
+
+552
+00:29:57,229 --> 00:30:00,731
+that code is not in Array.      
+It's in this extension of       
+
+553
+00:30:00,733 --> 00:30:06,136
+Sequence. Okay, so              
+now you're actually inheriting  
+
+554
+00:30:06,138 --> 00:30:09,206
+true implementation,            
+true functionality. And         
+
+555
+00:30:09,208 --> 00:30:12,576
+you're multiply inheriting it,  
+okay? And                       
+
+556
+00:30:12,578 --> 00:30:14,278
+you're doing it in              
+a generic way so                
+
+557
+00:30:14,280 --> 00:30:17,581
+that the code works on arrays,  
+string characters, etc.,        
+
+558
+00:30:17,583 --> 00:30:21,819
+equally. Okay, so hopefully,    
+that's given you some feel for  
+
+559
+00:30:21,821 --> 00:30:25,355
+like whoa, what you could do    
+if you had these protocols?     
+
+560
+00:30:25,357 --> 00:30:28,625
+If you've designed your         
+API using protocols.            
+
+561
+00:30:28,627 --> 00:30:31,962
+And then, you could add code    
+like this using extensions.     
+
+562
+00:30:31,964 --> 00:30:35,866
+You can hopefully see, and use  
+generics especially, you could  
+
+563
+00:30:35,868 --> 00:30:40,237
+see how you could reuse a lot   
+of code. Now this approach, I   
+
+564
+00:30:40,239 --> 00:30:44,041
+actually mentioned it before.   
+This approach of focusing on    
+
+565
+00:30:44,043 --> 00:30:46,543
+the behavior of things          
+rather than on the storage.     
+
+566
+00:30:46,545 --> 00:30:53,016
+Is leading to a methodology     
+called functional programming.  
+
+567
+00:30:53,018 --> 00:30:55,652
+And again, I can't teach        
+you that unfortunately, but     
+
+568
+00:30:55,654 --> 00:30:58,555
+I want you to know it exists.   
+And maybe you can take          
+
+569
+00:30:58,557 --> 00:31:00,691
+a course here where you         
+can learn about it.             
+
+570
+00:31:00,693 --> 00:31:03,894
+If you go out to the outside    
+world, self-teach               
+
+571
+00:31:03,896 --> 00:31:07,531
+yourself if you have to. It's   
+very powerful mechanism for     
+
+572
+00:31:07,533 --> 00:31:09,166
+programming.                    
+And the protocols and           
+
+573
+00:31:09,168 --> 00:31:12,669
+generics play right into this.  
+Because protocols and generics  
+
+574
+00:31:12,671 --> 00:31:16,039
+are all about the behavior      
+of things, not about their      
+
+575
+00:31:16,041 --> 00:31:21,044
+storage. Okay, all right.       
+That's all I can unfortunately  
+
+576
+00:31:21,046 --> 00:31:23,280
+have time to say about          
+the functional programming and  
+
+577
+00:31:23,282 --> 00:31:26,183
+protocols. And                  
+now let's back way up off of    
+
+578
+00:31:26,185 --> 00:31:26,650
+advanced protocols and          
+
+579
+00:31:26,652 --> 00:31:29,519
+start talking about a couple    
+of simple uses of protocols.    
+
+580
+00:31:29,521 --> 00:31:32,789
+Here's a simple protocol that   
+you could use right now in      
+
+581
+00:31:32,791 --> 00:31:35,993
+your calculator. It's called    
+CustomStringConvertible.        
+
+582
+00:31:35,995 --> 00:31:39,897
+And it only has one thing in    
+the protocol which is a var.    
+
+583
+00:31:39,899 --> 00:31:43,634
+It's a get-only var called      
+description. Looks familiar?    
+
+584
+00:31:43,636 --> 00:31:47,004
+Which is a string. And if       
+you implement this protocol,    
+
+585
+00:31:47,006 --> 00:31:49,506
+then when you print,            
+if you do the backslash,        
+
+586
+00:31:49,508 --> 00:31:53,010
+parenthesis thing and put your  
+thing inside. It will call      
+
+587
+00:31:53,012 --> 00:31:56,480
+this description to get the     
+description of it. So right     
+
+588
+00:31:56,482 --> 00:32:01,251
+now, if you said, print quote   
+\ ( your CalculatorBrain,       
+
+589
+00:32:01,253 --> 00:32:05,389
+in your view controller, ), it  
+would probably print out some   
+
+590
+00:32:05,391 --> 00:32:08,692
+hexadecimal number and the      
+word CalculatorBrain, which is  
+
+591
+00:32:08,694 --> 00:32:13,063
+useless. But if you put colon   
+CustomStringConvertible after   
+
+592
+00:32:13,065 --> 00:32:17,067
+your struct CalculatorBrain,    
+now, when you print it out,     
+
+593
+00:32:17,069 --> 00:32:20,170
+it'll print out the             
+description. In other words,    
+
+594
+00:32:20,172 --> 00:32:23,340
+the equation, right, because    
+you implement description       
+
+595
+00:32:23,342 --> 00:32:26,310
+already. I intentionally chose  
+the name description there      
+
+596
+00:32:26,312 --> 00:32:28,745
+so that you would implement     
+CustomStringConvertible         
+
+597
+00:32:28,747 --> 00:32:32,582
+automatically. But you have to  
+also say that you implement     
+
+598
+00:32:32,584 --> 00:32:34,017
+it. You can't just              
+implement description and       
+
+599
+00:32:34,019 --> 00:32:36,753
+expect it to work. You have     
+to say, yes, and I implement    
+
+600
+00:32:36,755 --> 00:32:39,256
+CustomStringConvertible by      
+putting that on there.          
+
+601
+00:32:39,258 --> 00:32:41,325
+So give that a try.             
+Go get your calculator and      
+
+602
+00:32:41,327 --> 00:32:43,126
+put this colon                  
+CustomStringConvertible. And    
+
+603
+00:32:43,128 --> 00:32:46,029
+then, in your view controller   
+somewhere, print out your       
+
+604
+00:32:46,031 --> 00:32:50,600
+CalculatorBrain with\().        
+See what you get, all right?    
+
+605
+00:32:50,602 --> 00:32:55,339
+Another really simple use of    
+protocols is delegation, okay?  
+
+606
+00:32:55,341 --> 00:32:58,642
+And it's really where we've     
+all been leading up to here,    
+
+607
+00:32:58,644 --> 00:33:02,479
+in terms of a use case of       
+protocols. This is not gonna    
+
+608
+00:33:02,481 --> 00:33:05,248
+use any of the other stuff I    
+was talking about, generics or  
+
+609
+00:33:05,250 --> 00:33:06,483
+extensions, none of that,       
+okay?                           
+
+610
+00:33:06,485 --> 00:33:09,886
+This is just the simplest       
+possible use of protocols,      
+
+611
+00:33:09,888 --> 00:33:11,388
+although it does use            
+Objective-C protocols           
+
+612
+00:33:11,390 --> 00:33:14,891
+because a lot of optional       
+methods in these protocols.     
+
+613
+00:33:14,893 --> 00:33:17,861
+But this is how we're           
+gonna implement this MVC        
+
+614
+00:33:17,863 --> 00:33:20,297
+thing we talked about,          
+which is blind, structured      
+
+615
+00:33:20,299 --> 00:33:23,667
+communication. The delegate     
+and the data source, remember   
+
+616
+00:33:23,669 --> 00:33:27,170
+that from lecture 2? This is    
+how we're gonna implement it,   
+
+617
+00:33:27,172 --> 00:33:30,040
+we're gonna implement this      
+with protocols. So here's how   
+
+618
+00:33:30,042 --> 00:33:34,578
+it plays out, to use protocols  
+to do that delegation. First,   
+
+619
+00:33:34,580 --> 00:33:38,315
+UIView thing, okay, like        
+a ScrollView, for example,      
+
+620
+00:33:38,317 --> 00:33:42,252
+or a TableView, which we'll     
+talk about next week.           
+
+621
+00:33:42,254 --> 00:33:46,456
+It declares a protocol,         
+which has all the will and      
+
+622
+00:33:46,458 --> 00:33:48,558
+should and did methods          
+I was talking about.            
+
+623
+00:33:48,560 --> 00:33:51,795
+So I will scroll to here, or    
+should I allow scrolling in     
+
+624
+00:33:51,797 --> 00:33:54,865
+this direction? Those kind      
+of methods, it implements       
+
+625
+00:33:54,867 --> 00:33:57,868
+a protocol that just has        
+those methods listed in it.     
+
+626
+00:33:57,870 --> 00:33:59,603
+It's gonna be                   
+an Objective-C protocol,        
+
+627
+00:33:59,605 --> 00:34:02,172
+they're almost all gonna be     
+optional, all right? So it      
+
+628
+00:34:02,174 --> 00:34:06,710
+just declares that protocol.    
+Then the view adds public API   
+
+629
+00:34:06,712 --> 00:34:11,448
+to itself, which is a weak      
+property called delegate or     
+
+630
+00:34:11,450 --> 00:34:17,621
+sometimes data source. And      
+that type is that protocol,     
+
+631
+00:34:18,122 --> 00:34:21,224
+okay? So anything can be        
+assigned to that var,           
+
+632
+00:34:21,226 --> 00:34:26,163
+as long as it implements that   
+protocol. The view uses this    
+
+633
+00:34:26,165 --> 00:34:28,698
+delegate property in            
+itself to get the answer,       
+
+634
+00:34:28,700 --> 00:34:32,536
+should I scroll here, and to    
+tell people, I just did scroll  
+
+635
+00:34:32,538 --> 00:34:35,539
+here, okay? It sends those      
+messages to the delegate,       
+
+636
+00:34:35,541 --> 00:34:37,441
+because the delegate            
+implements, optionally,         
+
+637
+00:34:37,443 --> 00:34:40,043
+the methods in that protocol    
+so we can send it to them.      
+
+638
+00:34:40,045 --> 00:34:42,612
+If it has no delegate,          
+if the delegate is nil,         
+
+639
+00:34:42,614 --> 00:34:45,849
+because this weak delegate      
+property, since it's weak,      
+
+640
+00:34:45,851 --> 00:34:50,654
+it has to be an optional. All   
+weak properties are optional.   
+
+641
+00:34:50,656 --> 00:34:51,988
+So it could be nil.             
+And if it's nil,                
+
+642
+00:34:51,990 --> 00:34:54,191
+then the ScrollView's just      
+not gonna talk to a delegate.   
+
+643
+00:34:54,193 --> 00:34:57,828
+It's just not gonna ask it any  
+questions or tell it anything.  
+
+644
+00:34:58,062 --> 00:35:02,299
+Now, the controller declares    
+that it implements that         
+
+645
+00:35:02,301 --> 00:35:03,934
+protocol.                       
+That's what it has to say.      
+
+646
+00:35:03,936 --> 00:35:07,437
+It has to say at the top, you   
+know, if view, class UI view,   
+
+647
+00:35:07,439 --> 00:35:10,073
+class calculator view           
+controller, whatever,           
+
+648
+00:35:10,075 --> 00:35:13,310
+UIViewController comma          
+UIScrollViewDelegate. So        
+
+649
+00:35:13,312 --> 00:35:16,947
+it says, I implement that.      
+Then the controller sets        
+
+650
+00:35:16,949 --> 00:35:21,885
+itself as the delegate of the   
+view, which will be legal now   
+
+651
+00:35:21,887 --> 00:35:24,588
+because the controller claims   
+to implement that protocol.     
+
+652
+00:35:24,590 --> 00:35:27,357
+So it can now be put            
+in a var of type                
+
+653
+00:35:27,359 --> 00:35:29,126
+that protocol. And finally,     
+
+654
+00:35:29,128 --> 00:35:31,161
+the controller implements       
+whatever methods it wants.      
+
+655
+00:35:31,163 --> 00:35:33,930
+Since they're probably mostly   
+optional, it can just pick and  
+
+656
+00:35:33,932 --> 00:35:35,565
+choose which ones it wants to.  
+
+657
+00:35:35,567 --> 00:35:39,069
+And those did and should        
+methods will now start being    
+
+658
+00:35:39,071 --> 00:35:42,305
+sent to it by the ScrollView    
+or whatever, okay?              
+
+659
+00:35:42,307 --> 00:35:43,840
+So now the view's hooked        
+up to the controller.           
+
+660
+00:35:43,842 --> 00:35:47,144
+The view has no idea who he's   
+talking to. All it knows about  
+
+661
+00:35:47,146 --> 00:35:49,880
+this delegate is that it        
+implements those should and     
+
+662
+00:35:49,882 --> 00:35:50,881
+did things.                     
+That's all it knows,            
+
+663
+00:35:50,883 --> 00:35:53,450
+so it's a completely generic    
+and reusable view still.        
+
+664
+00:35:53,452 --> 00:35:57,187
+But it can communicate with     
+the controller. This mechanism  
+
+665
+00:35:57,189 --> 00:36:00,290
+of delegation, you find         
+it all throughout iOS.          
+
+666
+00:36:00,292 --> 00:36:04,327
+Any complicated iOS object is   
+gonna use delegation when it    
+
+667
+00:36:04,329 --> 00:36:06,296
+needs to talk back              
+to its controller               
+
+668
+00:36:06,298 --> 00:36:09,900
+in a complicated way.           
+This was all designed, though,  
+
+669
+00:36:09,902 --> 00:36:12,636
+pre-Swift and pre-closures,     
+things like that.               
+
+670
+00:36:12,638 --> 00:36:15,939
+A lot of times, a closure       
+might be a better solution      
+
+671
+00:36:15,941 --> 00:36:21,044
+than delegation. So,            
+delegation- a little bit of,    
+
+672
+00:36:21,046 --> 00:36:24,981
+what do you call it,            
+backwards compatibility thing.  
+
+673
+00:36:24,983 --> 00:36:27,117
+But you still gotta know it     
+well if you're gonna do iOS,    
+
+674
+00:36:27,119 --> 00:36:31,221
+because it's just everywhere    
+in iOS. By the way,             
+
+675
+00:36:31,223 --> 00:36:34,691
+do not use delegation in your   
+homework assignment three.      
+
+676
+00:36:34,693 --> 00:36:36,893
+I think I might even have       
+made it a required task.        
+
+677
+00:36:36,895 --> 00:36:39,629
+You can't do it,                
+do not use delegation. I never  
+
+678
+00:36:39,631 --> 00:36:42,499
+teach you anything after        
+the assignment's already,       
+
+679
+00:36:42,501 --> 00:36:46,369
+you know, started.              
+Delegation's not for            
+
+680
+00:36:46,371 --> 00:36:50,006
+assignment three. All right,    
+so let's take a quick look at   
+
+681
+00:36:50,008 --> 00:36:52,842
+what this looks like code-wise  
+for ScrollView. First,          
+
+682
+00:36:52,844 --> 00:36:55,378
+ScrollView's going to have      
+a var called delegate.          
+
+683
+00:36:55,380 --> 00:36:58,248
+It's gonna be of type           
+UIScrollViewDelegate optional   
+
+684
+00:36:58,250 --> 00:37:01,718
+because it's weak. The          
+protocol UIScrollViewDelegate   
+
+685
+00:37:01,720 --> 00:37:05,689
+looks like this. It's got       
+these optional functions,       
+
+686
+00:37:05,691 --> 00:37:07,324
+like scrollViewDidScroll and    
+
+687
+00:37:07,326 --> 00:37:10,126
+give me the viewForZooming      
+in the ScrollView,              
+
+688
+00:37:10,128 --> 00:37:14,130
+etc. Then the controller is     
+gonna say, yeah, I implement    
+
+689
+00:37:14,132 --> 00:37:17,500
+UIScrollViewDelegate by doing   
+the little or purple or         
+
+690
+00:37:17,502 --> 00:37:21,404
+blue or whatever code that is.  
+And in viewDidLoad, the view    
+
+691
+00:37:21,406 --> 00:37:24,941
+controller's gonna say,         
+ScrollView's delegate is me.    
+
+692
+00:37:24,943 --> 00:37:27,477
+So ScrollView, please send      
+me all those messages. And      
+
+693
+00:37:27,479 --> 00:37:31,047
+then it would just implement    
+whichever methods it wants.     
+
+694
+00:37:31,049 --> 00:37:34,818
+And we'll see this in the demo  
+I'm gonna do today as well.     
+
+695
+00:37:34,820 --> 00:37:36,152
+All right, so                   
+that's it for delegation.       
+
+696
+00:37:36,154 --> 00:37:41,858
+Let's move on now to the first  
+class that uses delegation,     
+
+697
+00:37:41,860 --> 00:37:43,660
+it's ScrollView. Before I       
+talk about ScrollView,          
+
+698
+00:37:43,662 --> 00:37:45,829
+I wanna show you a little       
+bit how ScrollView works,       
+
+699
+00:37:45,831 --> 00:37:46,763
+this ancient video I have.      
+
+700
+00:37:46,765 --> 00:37:49,699
+This is like, I don't know,     
+iPhone 1 or something. But      
+
+701
+00:37:49,701 --> 00:37:51,368
+if you look at the way          
+it's scrolling,                 
+
+702
+00:37:51,370 --> 00:37:53,069
+it actually is very             
+sophisticated.                  
+
+703
+00:37:53,071 --> 00:37:56,172
+It can have a horizontally      
+scrolling thing,                
+
+704
+00:37:56,174 --> 00:37:57,307
+like the stock charts, and      
+
+705
+00:37:57,309 --> 00:38:00,043
+inside of it, have vertically   
+scrolling ScrollView.           
+
+706
+00:38:00,045 --> 00:38:02,379
+So that's ScrollViews           
+inside ScrollViews, okay?       
+
+707
+00:38:02,381 --> 00:38:05,282
+And ScrollView's smart enough   
+to know whether you're swiping  
+
+708
+00:38:05,284 --> 00:38:10,420
+sideways or vertically to make  
+it scroll. Now let's talk       
+
+709
+00:38:10,422 --> 00:38:14,324
+about how you put something in  
+a ScrollView so you can scroll  
+
+710
+00:38:14,326 --> 00:38:18,628
+around in it. But you do it     
+by adding subviews to it. So    
+
+711
+00:38:18,630 --> 00:38:21,531
+let's review how we add         
+subviews to a normal view. So   
+
+712
+00:38:21,533 --> 00:38:24,968
+I create a view, like a logo    
+view. And I set its frame,      
+
+713
+00:38:24,970 --> 00:38:26,936
+which is where it's gonna       
+be in its superview.            
+
+714
+00:38:26,938 --> 00:38:29,706
+And then I just add it to its   
+superview. So here, I'm saying  
+
+715
+00:38:29,708 --> 00:38:32,809
+view.addSubview(logo) view is   
+probably the top-level view     
+
+716
+00:38:32,811 --> 00:38:36,179
+in my view controller. Or we    
+know that there's a var called  
+
+717
+00:38:36,181 --> 00:38:39,616
+view for that. So               
+a ScrollView is similar. But    
+
+718
+00:38:39,618 --> 00:38:42,952
+before you're doing all that,   
+you're doing a very important   
+
+719
+00:38:42,954 --> 00:38:47,123
+step, which is to set the       
+contentSize of the scrollView.  
+
+720
+00:38:47,125 --> 00:38:50,293
+So this is a var contentSize.   
+It's a CGSize.                  
+
+721
+00:38:50,295 --> 00:38:53,096
+And it's gonna be how big       
+a space you're going to be      
+
+722
+00:38:53,098 --> 00:38:55,765
+scrolling over. So you've       
+gotta set that first. It's      
+
+723
+00:38:55,767 --> 00:38:58,635
+very important to set that      
+first. But then, after that,    
+
+724
+00:38:58,637 --> 00:39:01,538
+you just addSubview,            
+just like you did before.       
+
+725
+00:39:01,540 --> 00:39:06,710
+So here, I added the, this      
+logo view at 2700 across and    
+
+726
+00:39:06,712 --> 00:39:11,348
+50 down. And that's it,         
+so now the ScrollView is        
+
+727
+00:39:11,350 --> 00:39:14,217
+going to scroll around.         
+Here, I added another one.      
+
+728
+00:39:14,219 --> 00:39:16,920
+Let's add two views, okay,      
+we got two views in there. And  
+
+729
+00:39:16,922 --> 00:39:20,256
+now the ScrollView is just      
+going to scroll around          
+
+730
+00:39:20,258 --> 00:39:23,126
+on this content area. You see,  
+it's just scrolling around.     
+
+731
+00:39:23,128 --> 00:39:25,995
+In fact, you'll even see        
+the white of the content area   
+
+732
+00:39:25,997 --> 00:39:29,666
+while you're scrolling around   
+to do that. Now, of course,     
+
+733
+00:39:29,668 --> 00:39:33,036
+you can reposition the views.   
+Let's put this big              
+
+734
+00:39:33,038 --> 00:39:34,337
+aerial view up in the corner.   
+And                             
+
+735
+00:39:34,339 --> 00:39:37,040
+then let's put the Stanford     
+logo so that it overlaps it.    
+
+736
+00:39:37,042 --> 00:39:39,776
+And then we can always change   
+our contentSize any time        
+
+737
+00:39:39,778 --> 00:39:42,979
+we want to not have any         
+extra space, right,             
+
+738
+00:39:42,981 --> 00:39:46,316
+and contain the whole thing.    
+So if we do that, then,         
+
+739
+00:39:46,318 --> 00:39:49,486
+when we're scrolling around,    
+we're not seeing                
+
+740
+00:39:49,488 --> 00:39:53,857
+the white background there. So  
+that's how ScrollView works,    
+
+741
+00:39:53,859 --> 00:39:56,793
+couldn't be simpler. It's       
+all about that content size.    
+
+742
+00:39:56,795 --> 00:39:58,328
+If you forget to set            
+the content size,               
+
+743
+00:39:58,330 --> 00:40:02,332
+scroll view will not work. If   
+you remember nothing else from  
+
+744
+00:40:02,334 --> 00:40:06,136
+this lecture, remember that.    
+Once it's scrolling around,     
+
+745
+00:40:06,138 --> 00:40:09,272
+you can find out information    
+about where it is.              
+
+746
+00:40:09,274 --> 00:40:10,840
+You can find out                
+the upper left corner for       
+
+747
+00:40:10,842 --> 00:40:14,411
+example of where the scroll     
+view is. Using scrollView's     
+
+748
+00:40:14,413 --> 00:40:17,213
+contentOffset point,            
+it'll tell you the x and        
+
+749
+00:40:17,215 --> 00:40:20,283
+y of the upper left corner of   
+where the thing is. You could   
+
+750
+00:40:20,285 --> 00:40:24,320
+also just say, where is the     
+rectangle that is currently     
+
+751
+00:40:24,322 --> 00:40:28,625
+showing the scrollView, where   
+is that showing in the view     
+
+752
+00:40:28,627 --> 00:40:32,362
+behind that like aerial view    
+of Stanford? But to do that,    
+
+753
+00:40:32,364 --> 00:40:35,799
+don't forget that those are     
+different coordinate systems.   
+
+754
+00:40:35,801 --> 00:40:36,166
+They're different views so      
+
+755
+00:40:36,168 --> 00:40:37,267
+they have different             
+coordinate systems.             
+
+756
+00:40:37,269 --> 00:40:39,536
+So you have to convert,         
+all right.                      
+
+757
+00:40:39,538 --> 00:40:43,006
+You're gonna convert the        
+scrollView's bounds, right,     
+
+758
+00:40:43,008 --> 00:40:43,306
+the scrollView's bounds,        
+
+759
+00:40:43,308 --> 00:40:45,742
+that's in the scrollView's      
+coordinate system. You're       
+
+760
+00:40:45,744 --> 00:40:48,445
+gonna convert that to the       
+coordinate system of the view   
+
+761
+00:40:48,447 --> 00:40:52,582
+like aerial. See, I'm doing     
+aerial.convert up there,        
+
+762
+00:40:52,584 --> 00:40:55,552
+converting that rectangle.      
+Now why are those rectangles    
+
+763
+00:40:55,554 --> 00:40:57,420
+not the same?                   
+Well, a lot of reasons.         
+
+764
+00:40:57,422 --> 00:41:00,123
+One, you're panning around so   
+it's always changing.           
+
+765
+00:41:00,125 --> 00:41:03,159
+Two, you might be zoomed, so    
+it might be quite different.    
+
+766
+00:41:03,161 --> 00:41:06,095
+If you're zoomed in on that     
+scrollView than that little     
+
+767
+00:41:06,097 --> 00:41:09,065
+rectangle might represent       
+a huge piece of aerial or it    
+
+768
+00:41:09,067 --> 00:41:12,569
+might represent a tiny, little  
+piece of aerial. Who knows.     
+
+769
+00:41:12,571 --> 00:41:13,770
+So you're gonna use this        
+method we already saw.          
+
+770
+00:41:13,772 --> 00:41:17,240
+We saw it when we were          
+doing the drawing example.      
+
+771
+00:41:17,242 --> 00:41:20,677
+I converted center from my      
+super view down to my view      
+
+772
+00:41:20,679 --> 00:41:23,947
+here. I'm just converting the   
+bound to the scrollView. From   
+
+773
+00:41:23,949 --> 00:41:27,383
+the scrollView to whatever      
+view there that I'm interested  
+
+774
+00:41:27,385 --> 00:41:32,222
+in. All right. Now,             
+
+775
+00:41:32,224 --> 00:41:35,225
+how do we create one of these   
+things? Very straightforward.   
+
+776
+00:41:35,227 --> 00:41:40,096
+We drag it out of the           
+utilities area in storyboard.   
+
+777
+00:41:40,098 --> 00:41:43,132
+It's just a view so you can     
+do UIView, scrollView frame     
+
+778
+00:41:43,134 --> 00:41:46,469
+if you want, but 99% of         
+the time we're pulling it out.  
+
+779
+00:41:46,471 --> 00:41:48,371
+You can also pick a view        
+that's already in your          
+
+780
+00:41:48,373 --> 00:41:52,509
+storyboard and go up to Embed   
+and say Embed In -> Scroll      
+
+781
+00:41:52,511 --> 00:41:54,010
+View. And it'll put it inside   
+the scrollView. Okay, so        
+
+782
+00:41:54,012 --> 00:41:58,915
+that's another way to do that.  
+Then you just add whatever      
+
+783
+00:41:58,917 --> 00:42:01,784
+your too big view is. The view  
+you wanna scroll around in.     
+
+784
+00:42:01,786 --> 00:42:03,219
+You just add it as a sub        
+view of the scrollView. But     
+
+785
+00:42:03,221 --> 00:42:07,524
+of course, you're not gonna     
+forget to set the contentSize.  
+
+786
+00:42:07,725 --> 00:42:10,727
+Okay? And that's it, it's       
+really quite simple to use.     
+
+787
+00:42:10,729 --> 00:42:14,230
+And you can scroll around       
+in there programmatically,      
+
+788
+00:42:14,232 --> 00:42:17,667
+obviously, the user's           
+gonna have their touch.         
+
+789
+00:42:17,669 --> 00:42:19,502
+And they can just pan around,   
+
+790
+00:42:19,504 --> 00:42:23,006
+but you can do it too by        
+saying scrollRectToVisible,     
+
+791
+00:42:23,008 --> 00:42:25,208
+and it'll take a rectangle and  
+make it                         
+
+792
+00:42:25,210 --> 00:42:28,077
+hopefully entirely fit on       
+screen. It'll do the minimum    
+
+793
+00:42:28,079 --> 00:42:30,613
+amount of scrolling necessary   
+to get that rectangle,          
+
+794
+00:42:30,615 --> 00:42:34,751
+on screen. You can do a lot of  
+other things in scrollView,     
+
+795
+00:42:34,753 --> 00:42:37,487
+I don't have time to talk       
+about like controlling          
+
+796
+00:42:37,489 --> 00:42:40,623
+that behavior where it          
+only scrolls vertically or      
+
+797
+00:42:40,625 --> 00:42:43,927
+horizontally and it'll kind of  
+on first motion it'll figure    
+
+798
+00:42:43,929 --> 00:42:47,363
+out which one you mean and      
+do that. You can flash          
+
+799
+00:42:47,365 --> 00:42:51,901
+the scroll indicators when      
+the thing appears on screen.    
+
+800
+00:42:51,903 --> 00:42:56,673
+You can also offset the actual  
+content that you're scrolling   
+
+801
+00:42:56,675 --> 00:42:57,774
+over by a little bit.           
+
+802
+00:42:57,776 --> 00:42:59,876
+This happens a lot in           
+navigation controllers.         
+
+803
+00:42:59,878 --> 00:43:02,912
+Sometimes the bar at the top,   
+which is semi-opaque, or        
+
+804
+00:43:02,914 --> 00:43:05,882
+semi-transparent, is not        
+transparent enough for          
+
+805
+00:43:05,884 --> 00:43:08,718
+the application of the,         
+whatever you're looking at in   
+
+806
+00:43:08,720 --> 00:43:11,187
+your scroll view. So            
+you'll offset it a little bit,  
+
+807
+00:43:11,189 --> 00:43:14,624
+the content you'll offset by    
+that height of the, navigation  
+
+808
+00:43:14,626 --> 00:43:17,193
+draw. So there's a whole bunch  
+of stuff in there I can't       
+
+809
+00:43:17,195 --> 00:43:21,297
+really talk about. Another      
+big piece of this is zooming.   
+
+810
+00:43:21,299 --> 00:43:23,967
+So, we've talked about panning  
+around in the scroll view but   
+
+811
+00:43:23,969 --> 00:43:26,369
+you can also use your           
+pinching to zoom in and         
+
+812
+00:43:26,371 --> 00:43:30,873
+out. So zooming in and          
+out, the way that works,        
+
+813
+00:43:30,875 --> 00:43:34,344
+all UIViews have a property     
+called their transform.         
+
+814
+00:43:34,346 --> 00:43:39,349
+It's an affine transform which  
+means it has translate, scale,  
+
+815
+00:43:39,351 --> 00:43:43,052
+and rotate. And                 
+when you pinch on a view,       
+
+816
+00:43:43,054 --> 00:43:46,456
+all it's doing is affecting     
+the scale of its transform,     
+
+817
+00:43:46,458 --> 00:43:49,993
+does nothing else.              
+Now that for most views, for    
+
+818
+00:43:49,995 --> 00:43:52,161
+all views, that's going         
+to scale the bits up. So        
+
+819
+00:43:52,163 --> 00:43:55,098
+if you zoomed in really big,    
+you'd have really big pixels.   
+
+820
+00:43:55,100 --> 00:43:58,735
+It would look really grainy.    
+But if the view wants to,       
+
+821
+00:43:58,737 --> 00:44:01,938
+it can make it look really      
+good after the zooming is       
+
+822
+00:44:01,940 --> 00:44:06,476
+done, for example, UIImageView  
+does that. If you're zooming    
+
+823
+00:44:06,478 --> 00:44:10,413
+in on a UI image and its got    
+more bits of resolution, it'll  
+
+824
+00:44:10,415 --> 00:44:13,549
+show them to you as you zoom    
+in, and you could do that, for  
+
+825
+00:44:13,551 --> 00:44:17,086
+example, with your calculator.  
+If you had your calculator in   
+
+826
+00:44:17,088 --> 00:44:18,187
+a scroll view,                  
+which you're not going to.      
+
+827
+00:44:18,189 --> 00:44:21,658
+But if you did, if you had the  
+graph part of it, you could,    
+
+828
+00:44:21,660 --> 00:44:24,327
+when it pinched in, when it     
+was done pinching, you could    
+
+829
+00:44:24,329 --> 00:44:28,431
+re-draw the graph to give it    
+nice smooth curves, right, so   
+
+830
+00:44:28,433 --> 00:44:31,167
+it wouldn't be all pixelated.   
+All right,                      
+
+831
+00:44:31,169 --> 00:44:34,137
+I'll show you how to do         
+that in the next slide. So,     
+
+832
+00:44:34,139 --> 00:44:37,640
+two things about zooming in     
+a scroll view though that you   
+
+833
+00:44:37,642 --> 00:44:40,076
+have to know. One is you        
+have to set the minimum and     
+
+834
+00:44:40,078 --> 00:44:43,980
+maximum zoom scale. So that's   
+how far you'll zoom in, and     
+
+835
+00:44:43,982 --> 00:44:45,815
+how far you're allowed          
+to zoom out. And                
+
+836
+00:44:45,817 --> 00:44:50,520
+by default these are 1.0 and    
+1.0, meaning no zooming in and  
+
+837
+00:44:50,522 --> 00:44:54,390
+no zooming out. So you have     
+to set these to something. So   
+
+838
+00:44:54,392 --> 00:44:56,993
+if you set the minimum          
+zoom scale to 0.5,              
+
+839
+00:44:56,995 --> 00:44:59,896
+means you'll zoom down          
+to half its normal size.        
+
+840
+00:44:59,898 --> 00:45:01,330
+And if you set the maximum      
+zoom scale to 2.0 it means      
+
+841
+00:45:01,332 --> 00:45:03,800
+you're gonna zoom out to twice  
+its normal size. All right, so  
+
+842
+00:45:03,802 --> 00:45:07,637
+you can decide how much you     
+want to let your users zoom in  
+
+843
+00:45:07,639 --> 00:45:12,341
+and out. The other piece is     
+you need a delegate method.     
+
+844
+00:45:12,343 --> 00:45:15,211
+Zooming does not work           
+without delegation. And so      
+
+845
+00:45:15,213 --> 00:45:17,680
+you have to implement this      
+delegate method called          
+
+846
+00:45:17,682 --> 00:45:20,983
+viewForZooming(in scrollView)   
+and all you have to do is       
+
+847
+00:45:20,985 --> 00:45:23,019
+return the view that's          
+in the scroll view,             
+
+848
+00:45:23,021 --> 00:45:26,989
+one of the subviews, the one    
+that you're going to zoom on.   
+
+849
+00:45:26,991 --> 00:45:32,095
+And this is the one whose       
+transform transformed.          
+
+850
+00:45:32,097 --> 00:45:37,600
+Of course you can zoom          
+programmatically as well.       
+
+851
+00:45:37,602 --> 00:45:38,601
+It's not just                   
+pinching to zoom.               
+
+852
+00:45:38,603 --> 00:45:41,204
+You can set the zoom scale.     
+Here's some examples on how to  
+
+853
+00:45:41,206 --> 00:45:44,507
+do that. So here I set my zoom  
+scale to 1.2, now I'm gonna     
+
+854
+00:45:44,509 --> 00:45:47,543
+set it to 1.0. See it           
+goes back to normal size.       
+
+855
+00:45:47,545 --> 00:45:52,215
+1.2 I'm zoomed in 20% okay or   
+same thing with rect. If I put  
+
+856
+00:45:52,217 --> 00:45:54,951
+a little rectangle right there  
+and I say zoom to that rect     
+
+857
+00:45:54,953 --> 00:45:57,353
+it's gonna zoom that rect       
+out as big as it can be.        
+
+858
+00:45:57,355 --> 00:45:59,756
+Or if I had a rectangle         
+that was bigger and             
+
+859
+00:45:59,758 --> 00:46:01,891
+I said zoom to rect it          
+will zoom it down so            
+
+860
+00:46:01,893 --> 00:46:04,393
+the rectangle fits. Okay        
+it's going to do the minimum    
+
+861
+00:46:04,395 --> 00:46:09,632
+zooming to get that             
+rectangle on screen.            
+
+862
+00:46:09,634 --> 00:46:11,634
+There's lot of of other         
+delegate methods,               
+
+863
+00:46:11,636 --> 00:46:14,437
+at least a dozen more besides   
+that view for zooming and       
+
+864
+00:46:14,439 --> 00:46:17,240
+scrollView. For example,        
+if you wanted to do the thing   
+
+865
+00:46:17,242 --> 00:46:19,976
+where you zoomed in and         
+then you wanted to re-draw      
+
+866
+00:46:19,978 --> 00:46:21,944
+to get rid of the pixelation,   
+you would implement             
+
+867
+00:46:21,946 --> 00:46:26,849
+scrollViewDidEndZooming with    
+view atScale. And               
+
+868
+00:46:26,851 --> 00:46:29,385
+this will tell you when         
+the pinching has stopped and    
+
+869
+00:46:29,387 --> 00:46:32,088
+now you can re-draw.            
+Of course if you re-draw by     
+
+870
+00:46:32,090 --> 00:46:34,757
+the way at the new scale,       
+you're gonna reset              
+
+871
+00:46:34,759 --> 00:46:36,993
+your transform,                 
+the view's transform,           
+
+872
+00:46:36,995 --> 00:46:40,062
+back to the identity            
+transform. Otherwise, you'll    
+
+873
+00:46:40,064 --> 00:46:43,299
+both drawing it scaled and it   
+will be scaled because you're   
+
+874
+00:46:43,301 --> 00:46:46,068
+affine transform is well        
+pixelated too. So, you don't    
+
+875
+00:46:46,070 --> 00:46:47,770
+want both of those things       
+going on at the same time.      
+
+876
+00:46:47,772 --> 00:46:52,441
+So you reset, you would         
+reset your transform here.      
+
+877
+00:46:53,143 --> 00:46:57,180
+Okay, so the rest of this       
+is going to be demo, so         
+
+878
+00:46:57,182 --> 00:46:59,749
+let me just talk about          
+what's coming up here.          
+
+879
+00:46:59,751 --> 00:47:03,486
+The demo I'm gonna do is        
+a Scroll View Demo, obviously.  
+
+880
+00:47:03,488 --> 00:47:04,187
+I'm gonna show you              
+how to do that,                 
+
+881
+00:47:04,189 --> 00:47:06,155
+I'll show you some other        
+things too, like extensions,    
+
+882
+00:47:06,157 --> 00:47:08,724
+things like that.               
+On Friday we have               
+
+883
+00:47:08,726 --> 00:47:12,128
+Instruments. Okay, performance  
+testing. Really important if    
+
+884
+00:47:12,130 --> 00:47:15,097
+you want to do the extra        
+credit in Assignment 3,         
+
+885
+00:47:15,099 --> 00:47:15,431
+which is a good one,            
+
+886
+00:47:15,433 --> 00:47:17,934
+you have to figure out          
+why your calculator,            
+
+887
+00:47:17,936 --> 00:47:21,270
+graphing thing doesn't perform  
+as well as you'd like.          
+
+888
+00:47:21,272 --> 00:47:23,840
+On Monday, Assignment 3,        
+what you're working on now,     
+
+889
+00:47:23,842 --> 00:47:26,676
+your graphing calculator        
+is due, before lecture. And     
+
+890
+00:47:26,678 --> 00:47:29,111
+then the topic on Monday is     
+going to be multi-threading.    
+
+891
+00:47:29,113 --> 00:47:31,180
+We're gonna take the demo       
+we're doing today,              
+
+892
+00:47:31,182 --> 00:47:32,548
+which is going to               
+be very sluggish,               
+
+893
+00:47:32,550 --> 00:47:34,417
+and we're going to make it      
+perform a lot better using      
+
+894
+00:47:34,419 --> 00:47:38,688
+multi-threading. On Wednesday,  
+we're going to go into          
+
+895
+00:47:38,690 --> 00:47:42,525
+TableView, really important     
+part of the UIKit.              
+
+896
+00:47:42,527 --> 00:47:44,894
+There will be an assignment, a  
+TableView assignment that goes  
+
+897
+00:47:44,896 --> 00:47:48,364
+out on Wednesday. It'll be      
+due the next Wednesday. And     
+
+898
+00:47:48,366 --> 00:47:50,566
+there's no more reading         
+assignments. I can tell from    
+
+899
+00:47:50,568 --> 00:47:53,569
+talking to some of you that     
+you didn't read any of          
+
+900
+00:47:53,571 --> 00:47:57,840
+them very closely. And you      
+know, I don't quiz you on it,   
+
+901
+00:47:57,842 --> 00:48:01,844
+I don't test you on it because  
+it's kind of up to you how      
+
+902
+00:48:01,846 --> 00:48:03,446
+much you wanna learn            
+in this class.                  
+
+903
+00:48:03,448 --> 00:48:05,581
+It's just one of those things   
+where whatever you put into     
+
+904
+00:48:05,583 --> 00:48:07,083
+it is what you get out of it.   
+But                             
+
+905
+00:48:07,085 --> 00:48:11,954
+I really encourage you to at    
+least go through the parts      
+
+906
+00:48:11,956 --> 00:48:14,257
+in there that you               
+don't understand, and           
+
+907
+00:48:14,259 --> 00:48:17,059
+be cognizant of the fact, I     
+don't really understand this.   
+
+908
+00:48:17,061 --> 00:48:20,229
+Okay, because then when you     
+graduate from this class,       
+
+909
+00:48:20,231 --> 00:48:22,431
+which is, you know, you're      
+getting started with iOS in     
+
+910
+00:48:22,433 --> 00:48:25,201
+this class. When you graduate   
+from it you'll know,            
+
+911
+00:48:25,203 --> 00:48:26,769
+okay that's something           
+I gotta go back and             
+
+912
+00:48:26,771 --> 00:48:29,672
+really understand better.       
+All right, okay so              
+
+913
+00:48:29,674 --> 00:48:34,176
+this demo is going to be,       
+again, fresh start.             
+
+914
+00:48:34,178 --> 00:48:37,280
+So I'm gonna create a new       
+Xcode project in single view    
+
+915
+00:48:37,282 --> 00:48:39,548
+application.                    
+I'm gonna call it Cassini,      
+
+916
+00:48:39,550 --> 00:48:43,419
+cuz we're gonna do some stuff   
+with the images that came out   
+
+917
+00:48:43,421 --> 00:48:46,589
+back from Cassini probe         
+that went off to Saturn.        
+
+918
+00:48:46,591 --> 00:48:49,592
+And I'm gonna put it in the     
+same place I put all my maps,   
+
+919
+00:48:49,594 --> 00:48:54,130
+home directory Developer.       
+And here it is I'm gonna move   
+
+920
+00:48:54,132 --> 00:48:57,366
+xcassets and the AppDelegate    
+and the LaunchScreen out        
+
+921
+00:48:57,368 --> 00:49:01,370
+of the way again. I'm actually  
+not going to move info.plist    
+
+922
+00:49:01,372 --> 00:49:06,108
+out though. We are going to     
+be looking at that today. So    
+
+923
+00:49:06,110 --> 00:49:09,378
+we're gonna put these           
+in Supporting Files.            
+
+924
+00:49:10,080 --> 00:49:12,315
+Now, I showed you last          
+time how we can rename          
+
+925
+00:49:12,317 --> 00:49:16,552
+a ViewController, if it's got   
+like a generic name like this.  
+
+926
+00:49:16,554 --> 00:49:17,853
+You know, another thing         
+we could do to this             
+
+927
+00:49:17,855 --> 00:49:21,490
+ViewController, is just delete  
+it. So I'm just gonna go here,  
+
+928
+00:49:21,492 --> 00:49:24,961
+right click on it, and delete   
+it. And remove all references   
+
+929
+00:49:24,963 --> 00:49:28,030
+to it and I'm gonna go to my    
+storyboard right here, which    
+
+930
+00:49:28,032 --> 00:49:31,867
+still has this ViewController.  
+And by the way, if I go look    
+
+931
+00:49:31,869 --> 00:49:34,637
+at the identity inspector       
+here for that ViewController.   
+
+932
+00:49:34,639 --> 00:49:36,539
+It's still trying to be         
+class ViewController,           
+
+933
+00:49:36,541 --> 00:49:39,742
+even though I deleted that      
+from my app, all right.         
+
+934
+00:49:39,744 --> 00:49:42,111
+But I'm gonna fix that by       
+just deleting that from my      
+
+935
+00:49:42,113 --> 00:49:47,083
+storyboard. All right, so now   
+no ViewController anywhere.     
+
+936
+00:49:47,284 --> 00:49:50,486
+Now, I do need a view           
+controller for my app and       
+
+937
+00:49:50,488 --> 00:49:52,888
+it's gonna be called            
+ImageViewController.            
+
+938
+00:49:52,890 --> 00:49:56,425
+It's going to be a generic,     
+reusable MVC for showing        
+
+939
+00:49:56,427 --> 00:50:01,497
+an image. Whenever I build an   
+MVC, I always wanna see if I    
+
+940
+00:50:01,499 --> 00:50:04,133
+can build a nice generic        
+reusable one because then       
+
+941
+00:50:04,135 --> 00:50:07,536
+maybe I can use it in some      
+other app that I'm building.    
+
+942
+00:50:07,538 --> 00:50:09,872
+And also it gives me            
+the discipline as an API        
+
+943
+00:50:09,874 --> 00:50:13,209
+designer to think about my      
+public and private API even.    
+
+944
+00:50:13,211 --> 00:50:16,479
+So, let's go ahead and do       
+that, let's create a new file.  
+
+945
+00:50:16,481 --> 00:50:19,015
+Coco Touch Class of course,     
+and we'll call it               
+
+946
+00:50:19,017 --> 00:50:23,486
+ImageViewController, it's a     
+subclass of UIViewController.   
+
+947
+00:50:23,488 --> 00:50:24,420
+Okay, very carefully here,      
+
+948
+00:50:24,422 --> 00:50:27,690
+I do not wanna put this at the  
+top level. I wanna put it down  
+
+949
+00:50:27,692 --> 00:50:33,195
+in here where the rest of       
+my files are. All right so      
+
+950
+00:50:33,197 --> 00:50:35,731
+I got my ImageViewController    
+here. I don't need for          
+
+951
+00:50:35,733 --> 00:50:39,435
+now anyway, any of the          
+ViewController lifecycle. I'm   
+
+952
+00:50:39,437 --> 00:50:43,939
+also not going to segue from    
+this MVC. So I don't need any   
+
+953
+00:50:43,941 --> 00:50:47,309
+of that. I actually I'm going   
+to be segueing to it however,   
+
+954
+00:50:47,311 --> 00:50:49,945
+because it's a nice reusable    
+image showing things.           
+
+955
+00:50:49,947 --> 00:50:53,983
+So as you can imagine I might   
+want to be segueing to it any   
+
+956
+00:50:53,985 --> 00:50:58,287
+time I want to show an image.   
+When I have a new class like    
+
+957
+00:50:58,289 --> 00:51:02,958
+this one the first things I     
+like to do is think about what  
+
+958
+00:51:02,960 --> 00:51:08,431
+is my model? Because the model  
+is what this MVC does?          
+
+959
+00:51:08,433 --> 00:51:12,068
+So if I can determine what      
+the model is, it'll help me     
+
+960
+00:51:12,070 --> 00:51:15,604
+think clearly about what        
+this MVC is all about.          
+
+961
+00:51:15,606 --> 00:51:17,173
+And so this shows an image, so  
+
+962
+00:51:17,175 --> 00:51:20,910
+I'm gonna have my model,        
+I'm gonna have it be public so  
+
+963
+00:51:20,912 --> 00:51:24,947
+other people can set my model,  
+and I'm going to have it be     
+
+964
+00:51:24,949 --> 00:51:27,850
+a URL of an image.              
+Because what does my MVC does?  
+
+965
+00:51:27,852 --> 00:51:30,252
+It shows an image. That's what  
+it is, an image shower. So,     
+
+966
+00:51:30,254 --> 00:51:34,990
+it seems like having a URL of   
+an image would be a good model  
+
+967
+00:51:34,992 --> 00:51:40,996
+for it. Now, let's go back      
+to our storyboard here and      
+
+968
+00:51:40,998 --> 00:51:43,632
+create an MVC for this thing.   
+So I'm just gonna grab          
+
+969
+00:51:43,634 --> 00:51:47,470
+a View Controller. Drag it      
+out here. Gonna go up to        
+
+970
+00:51:47,472 --> 00:51:51,273
+the identity inspector, again,  
+and I'm gonna set it to be      
+
+971
+00:51:51,275 --> 00:51:55,311
+an ImageViewController,         
+right? Now,                     
+
+972
+00:51:55,313 --> 00:51:58,981
+I could start building my UI    
+here by dragging more things    
+
+973
+00:51:58,983 --> 00:52:02,118
+in, but I thought it might be   
+valuable a little bit, to show  
+
+974
+00:52:02,120 --> 00:52:04,954
+you how to build some UI in     
+code. It's gonna be simple,     
+
+975
+00:52:04,956 --> 00:52:07,456
+but we'll build some UI in      
+code. And what my UI here is    
+
+976
+00:52:07,458 --> 00:52:11,760
+gonna be at the beginning is    
+just an ImageViewController or  
+
+977
+00:52:11,762 --> 00:52:15,698
+a UIImageView, right? I'm just  
+going to show an image using    
+
+978
+00:52:15,700 --> 00:52:19,001
+UIImageView, this class         
+UIImageView. By the way,        
+
+979
+00:52:19,003 --> 00:52:22,872
+one thing that's missing here,  
+you can tell by this warning.   
+
+980
+00:52:22,874 --> 00:52:24,773
+Let's click on this warning     
+and see what it says.           
+
+981
+00:52:24,775 --> 00:52:26,842
+It says ImageViewController     
+is unreachable.                 
+
+982
+00:52:26,844 --> 00:52:31,013
+Remember that? There's no way   
+to get to this. That's because  
+
+983
+00:52:31,015 --> 00:52:34,884
+there is no arrow that          
+goes into this anywhere.        
+
+984
+00:52:34,886 --> 00:52:36,952
+If I were to run this app,      
+it would crash and              
+
+985
+00:52:36,954 --> 00:52:40,356
+say, there's no initial         
+View Controller. So,            
+
+986
+00:52:40,358 --> 00:52:41,824
+how do you set the initial      
+View Controller? Well,          
+
+987
+00:52:41,826 --> 00:52:44,293
+you pick the View Controller    
+you want to be the initial one  
+
+988
+00:52:44,295 --> 00:52:47,630
+and you go over here to the     
+Attributes Inspector because    
+
+989
+00:52:47,632 --> 00:52:50,966
+it's an attribute of that       
+View Controller. And down here  
+
+990
+00:52:50,968 --> 00:52:54,136
+under View Controller right     
+after its title is, is Initial  
+
+991
+00:52:54,138 --> 00:52:57,873
+View Controller. So, I click    
+that and look what happened.    
+
+992
+00:52:57,875 --> 00:53:00,142
+You got the little              
+entry arrow there. So           
+
+993
+00:53:00,144 --> 00:53:02,878
+now when this thing run, it's   
+gonna jump right into this      
+
+994
+00:53:02,880 --> 00:53:05,915
+View Controller. Which is       
+where we wanted to start.       
+
+995
+00:53:05,917 --> 00:53:07,750
+Eventually we're gonna          
+have other MVCs, but            
+
+996
+00:53:07,752 --> 00:53:11,287
+we'll start with this one.      
+All right,                      
+
+997
+00:53:11,289 --> 00:53:14,723
+back to my ImageViewController  
+here. I said I wanted to        
+
+998
+00:53:14,725 --> 00:53:18,027
+build its UI in code.           
+I know I need ImageView so      
+
+999
+00:53:18,029 --> 00:53:21,864
+I'm just gonna start right off  
+with private var imageView:     
+
+1000
+00:53:21,866 --> 00:53:24,967
+is a UIImageView.               
+And in fact, I'm gonna          
+
+1001
+00:53:24,969 --> 00:53:27,703
+create it right here. There's   
+no reason not just to say,      
+
+1002
+00:53:27,705 --> 00:53:31,340
+this, it's going to create it   
+with basically CGRect zero.     
+
+1003
+00:53:31,342 --> 00:53:33,742
+This is just like saying        
+frame: CGRect.zero,             
+
+1004
+00:53:33,744 --> 00:53:37,012
+it's exactly the same as doing  
+that, but you know we don't     
+
+1005
+00:53:37,014 --> 00:53:40,149
+need that extra code there.     
+So now I've created this image  
+
+1006
+00:53:40,151 --> 00:53:43,385
+view, it's in the upper left    
+hand corner of whatever its     
+
+1007
+00:53:43,387 --> 00:53:45,854
+super view is, it's not in      
+any super view yet, and         
+
+1008
+00:53:45,856 --> 00:53:47,790
+it's of zero zero size.         
+So it's not that useful, but    
+
+1009
+00:53:47,792 --> 00:53:51,360
+of course, as soon as I set an  
+image in it, I will resize it   
+
+1010
+00:53:51,362 --> 00:53:55,097
+to fit that image. And          
+speaking of setting an image    
+
+1011
+00:53:55,099 --> 00:53:59,335
+in it, I imagine that when I    
+set an image in my imageView,   
+
+1012
+00:53:59,337 --> 00:54:04,873
+I'm gonna need to do things     
+like change the the frame,      
+
+1013
+00:54:04,875 --> 00:54:06,609
+of my imageView, and            
+things like that.               
+
+1014
+00:54:06,611 --> 00:54:08,777
+So I'm gonna create             
+a little private var here,      
+
+1015
+00:54:08,779 --> 00:54:11,480
+called image, which is          
+gonna be a UIImage and          
+
+1016
+00:54:11,482 --> 00:54:14,583
+it's gonna be computed and      
+it's gonna have a get and       
+
+1017
+00:54:14,585 --> 00:54:17,519
+a set so that every time        
+I get or set the image,         
+
+1018
+00:54:17,521 --> 00:54:21,290
+I can do other stuff.           
+Okay, this is a really kind of  
+
+1019
+00:54:21,292 --> 00:54:25,094
+simple clean way to keep, you   
+know to do ancillary things     
+
+1020
+00:54:25,096 --> 00:54:29,365
+when you're settings and        
+getting some piece of data.     
+
+1021
+00:54:29,367 --> 00:54:32,768
+So, for example, when I         
+set this image right here,      
+
+1022
+00:54:32,770 --> 00:54:37,606
+I'm going to set the            
+imageView's image to be equal   
+
+1023
+00:54:37,608 --> 00:54:41,310
+to that new value of course.    
+That's the primary thing if I   
+
+1024
+00:54:41,312 --> 00:54:44,513
+wanna set my image, I need      
+to set it in my imageView.      
+
+1025
+00:54:44,515 --> 00:54:48,917
+So this var right here is just  
+the image that this imageView   
+
+1026
+00:54:48,919 --> 00:54:50,719
+is showing. But                 
+then also like I said,          
+
+1027
+00:54:50,721 --> 00:54:55,758
+I want to set my imageView's    
+size to fit this new image.     
+
+1028
+00:54:55,760 --> 00:54:58,594
+In fact, there happens to be    
+a method called sizeToFit in    
+
+1029
+00:54:58,596 --> 00:55:01,697
+imageView that will cause       
+it to size its frame to         
+
+1030
+00:55:01,699 --> 00:55:02,931
+fit whatever image              
+is inside of it.                
+
+1031
+00:55:02,933 --> 00:55:06,435
+So it's nice that it had        
+that this nice method for       
+
+1032
+00:55:06,437 --> 00:55:09,805
+me right here. If I control     
+click on it, you can read it.   
+
+1033
+00:55:09,807 --> 00:55:10,806
+See that's what it says.        
+
+1034
+00:55:10,808 --> 00:55:13,509
+And then how about getting it?  
+Well, I'm just gonna return     
+
+1035
+00:55:13,511 --> 00:55:18,180
+the imageView's image in        
+this case. Okay, so this        
+
+1036
+00:55:18,182 --> 00:55:21,684
+is a var and it's computed,     
+so there's no storage. And      
+
+1037
+00:55:21,686 --> 00:55:25,354
+actually I'm doing the storage  
+here in the imageView. Now,     
+
+1038
+00:55:25,356 --> 00:55:28,457
+this is giving me an error      
+right here. And the error it's  
+
+1039
+00:55:28,459 --> 00:55:31,393
+giving me is that I need        
+to unwrap this. Well,           
+
+1040
+00:55:31,395 --> 00:55:34,930
+that's because this image       
+right here is an optional.      
+
+1041
+00:55:34,932 --> 00:55:37,266
+Cuz imageViews don't            
+have to have an image,          
+
+1042
+00:55:37,268 --> 00:55:39,401
+they could be                   
+empty at the time.              
+
+1043
+00:55:39,403 --> 00:55:42,204
+Now I could unwrap this here,   
+but I'm thinking,               
+
+1044
+00:55:42,206 --> 00:55:46,675
+you know what? I want my UI to  
+be able to be showing no image  
+
+1045
+00:55:46,677 --> 00:55:49,178
+at some point. That's           
+perfectly reasonable. So        
+
+1046
+00:55:49,180 --> 00:55:54,049
+instead, I'm gonna change       
+this to be optional. So this    
+
+1047
+00:55:54,051 --> 00:55:57,753
+image var is optional, it can   
+be nil. And when I do that I    
+
+1048
+00:55:57,755 --> 00:56:00,889
+wanna make sure that I can say  
+imageView.image = newValue,     
+
+1049
+00:56:00,891 --> 00:56:04,493
+is that gonna work if newValue  
+is nil? Yes, it is because      
+
+1050
+00:56:04,495 --> 00:56:08,864
+we know that this imageView's   
+image is itself an optional.    
+
+1051
+00:56:08,866 --> 00:56:11,300
+The imageView might have        
+no image at this time.          
+
+1052
+00:56:11,302 --> 00:56:16,071
+It's perfectly fine. Okay,      
+everybody cool, understand      
+
+1053
+00:56:16,073 --> 00:56:19,641
+what I did there? It's just     
+a code organization thing,      
+
+1054
+00:56:19,643 --> 00:56:22,344
+it just keeps me from           
+having to, you know,            
+
+1055
+00:56:22,346 --> 00:56:25,180
+be resizing this fit somewhere  
+else. Or to be putting          
+
+1056
+00:56:25,182 --> 00:56:27,783
+in some other part of my code   
+that makes no sense. Here it    
+
+1057
+00:56:27,785 --> 00:56:30,085
+makes sense because here's      
+where I'm setting my image.     
+
+1058
+00:56:30,087 --> 00:56:34,990
+All right, let's now            
+put this imageView into         
+
+1059
+00:56:34,992 --> 00:56:39,395
+our view hierarchy in code.     
+I told you we were gonna do     
+
+1060
+00:56:39,397 --> 00:56:42,765
+our UI with code. Let's do it.  
+We're gonna say viewDidLoad is  
+
+1061
+00:56:42,767 --> 00:56:45,334
+a good place to do this         
+because we know that by         
+
+1062
+00:56:45,336 --> 00:56:48,637
+the time viewDidLoad happens,   
+we're fully initialized.        
+
+1063
+00:56:48,639 --> 00:56:49,938
+All our outlets are set.        
+
+1064
+00:56:49,940 --> 00:56:52,508
+We've been prepared if          
+someone's segueing to us.       
+
+1065
+00:56:52,510 --> 00:56:55,711
+We're in a really good state    
+right now to add more things    
+
+1066
+00:56:55,713 --> 00:56:58,580
+to our UI. And I'm gonna do     
+that just by saying view,       
+
+1067
+00:56:58,582 --> 00:57:01,950
+remember that the special bar   
+in View Controller which is     
+
+1068
+00:57:01,952 --> 00:57:07,122
+the top level view.             
+AddSubview my imageView,        
+
+1069
+00:57:07,124 --> 00:57:10,025
+okay? So                        
+I'm just putting it on there.   
+
+1070
+00:57:10,027 --> 00:57:15,531
+It'll either be zero zero size  
+or if someone set my imageURL,  
+
+1071
+00:57:15,533 --> 00:57:19,435
+then it might be sized          
+to fit or whatever.             
+
+1072
+00:57:19,437 --> 00:57:22,538
+Okay, now what happens if       
+someone sets my imageURL?       
+
+1073
+00:57:22,540 --> 00:57:25,841
+I better set this image, okay?  
+And we know a good way to do    
+
+1074
+00:57:25,843 --> 00:57:29,378
+that, right? So our property    
+observer here on our model,     
+
+1075
+00:57:29,380 --> 00:57:32,548
+any time someone sets our       
+model. First I'm gonna          
+
+1076
+00:57:32,550 --> 00:57:35,584
+actually clear out whatever     
+image I have. And then I'm      
+
+1077
+00:57:35,586 --> 00:57:39,254
+gonna put the fetching of       
+an image in another method.     
+
+1078
+00:57:39,256 --> 00:57:43,158
+Remember that this imageURL     
+might be an Internet URL and    
+
+1079
+00:57:43,160 --> 00:57:46,361
+this might be a slow Internet,  
+this might take a long time.    
+
+1080
+00:57:46,363 --> 00:57:50,365
+So I'm gonna put it all off     
+into this other function here,  
+
+1081
+00:57:50,367 --> 00:57:52,434
+private function, fetchImage.   
+
+1082
+00:57:52,436 --> 00:57:55,304
+And it's gonna do               
+the image fetching. So          
+
+1083
+00:57:55,306 --> 00:57:58,340
+how do we fetch an image        
+from a URL, all right?          
+
+1084
+00:57:58,342 --> 00:58:00,275
+It's actually remarkably easy.  
+
+1085
+00:58:00,277 --> 00:58:02,211
+First, I'm gonna make sure      
+that I have a URL to fetch.     
+
+1086
+00:58:02,213 --> 00:58:08,550
+I'm gonna say, if I can let     
+a url equal our imageURL,       
+
+1087
+00:58:08,552 --> 00:58:14,056
+that's our model, okay? If I    
+can get my imageURL there,      
+
+1088
+00:58:14,058 --> 00:58:17,426
+then I'm going to let the       
+contents of that URL, so I'm    
+
+1089
+00:58:17,428 --> 00:58:21,029
+gonna go out in the Internet    
+and get the contents of it.     
+
+1090
+00:58:21,031 --> 00:58:27,536
+I'm gonna let that equal        
+Data(contentsOf: url).          
+
+1091
+00:58:27,538 --> 00:58:30,472
+So data is that bag of bits,    
+thing I told you about          
+
+1092
+00:58:30,474 --> 00:58:33,909
+a few lectures ago. And it      
+has a really cool initializer   
+
+1093
+00:58:33,911 --> 00:58:37,279
+which is load up your bag of    
+bits with whatever's at this    
+
+1094
+00:58:37,281 --> 00:58:42,784
+URL on the Internet. Now, this  
+has an error right here. And    
+
+1095
+00:58:42,786 --> 00:58:46,688
+the error is that this throws,  
+
+1096
+00:58:46,990 --> 00:58:49,825
+because that URL might not      
+point to something, or          
+
+1097
+00:58:49,827 --> 00:58:54,563
+it might be a malformed URL,    
+or it might be a URL to some,   
+
+1098
+00:58:54,565 --> 00:58:56,532
+you know, bad data or           
+something like that.            
+
+1099
+00:58:56,534 --> 00:59:00,869
+So, if I look at this error     
+here, it's complaining about    
+
+1100
+00:59:00,871 --> 00:59:05,607
+the immutable. But it's also    
+saying this call can throw,     
+
+1101
+00:59:05,609 --> 00:59:07,042
+but is not marked               
+with a try and                  
+
+1102
+00:59:07,044 --> 00:59:11,380
+the error is not handled. Now   
+here, someone's asking me to    
+
+1103
+00:59:11,382 --> 00:59:16,151
+show this imageURL. I suppose   
+I could catch that error and    
+
+1104
+00:59:16,153 --> 00:59:17,686
+like put up an alert saying,    
+
+1105
+00:59:17,688 --> 00:59:22,257
+here was the reason I couldn't  
+show your, display your image.  
+
+1106
+00:59:22,259 --> 00:59:27,496
+But I'm just going to instead   
+use try, with a question mark,  
+
+1107
+00:59:27,498 --> 00:59:32,267
+and if I can't get it, then I   
+just won't show it. Which is    
+
+1108
+00:59:32,269 --> 00:59:37,506
+probably not that great but     
+it's good enough for a demo.    
+
+1109
+00:59:37,508 --> 00:59:40,842
+So now as soon as I put try     
+question mark here, this is no  
+
+1110
+00:59:40,844 --> 00:59:46,615
+longer going to be of type      
+data. It's gonna be what type?  
+
+1111
+00:59:47,517 --> 00:59:51,219
+Yeah, it's optional. See, it's  
+an optional data because if it  
+
+1112
+00:59:51,221 --> 00:59:54,756
+throws, it can come back nil.   
+All right, since this is        
+
+1113
+00:59:54,758 --> 00:59:59,695
+optional, I'm gonna say if I    
+can let the imageData equal to  
+
+1114
+00:59:59,697 --> 01:00:03,899
+the contents of that URL.       
+Then, now I can create          
+
+1115
+01:00:03,901 --> 01:00:08,770
+the UIImage with that and sure  
+enough my image which is this   
+
+1116
+01:00:08,772 --> 01:00:12,374
+var right here is gonna be      
+equal to UIImage. And image,    
+
+1117
+01:00:12,376 --> 01:00:15,577
+we all know about Image named,  
+but there's also Image,         
+
+1118
+01:00:15,579 --> 01:00:20,616
+with the imageData. So if you   
+have the actual JPEG data or    
+
+1119
+01:00:20,618 --> 01:00:25,287
+whatever, you can make          
+an image out of that.           
+
+1120
+01:00:25,289 --> 01:00:27,422
+And of course, when I do        
+image = UIImage here,           
+
+1121
+01:00:27,424 --> 01:00:29,324
+it's gonna go down              
+here to this setter.            
+
+1122
+01:00:29,326 --> 01:00:32,527
+It's gonna set that image       
+in the UIImageView.             
+
+1123
+01:00:32,529 --> 01:00:35,530
+Which we added as a subView     
+and then it's gonna size to     
+
+1124
+01:00:35,532 --> 01:00:40,869
+fit that imageView and          
+show it to us, all right?       
+
+1125
+01:00:40,871 --> 01:00:42,771
+Okay, now, there's only         
+one problem with this,          
+
+1126
+01:00:42,773 --> 01:00:46,642
+one thing I don't like about    
+this. Which is well, let's do   
+
+1127
+01:00:46,644 --> 01:00:49,378
+one other thing too. I'm gonna  
+go to viewDidLoad here and      
+
+1128
+01:00:49,380 --> 01:00:52,781
+have it do a demo URL,          
+so we can see.                  
+
+1129
+01:00:52,783 --> 01:00:55,884
+I'm gonna set my own            
+imageURL equal to and           
+
+1130
+01:00:55,886 --> 01:00:59,521
+I have these demo URLs here.    
+Okay, it's this little thing    
+
+1131
+01:00:59,523 --> 01:01:05,060
+right here. Copy that in.       
+These demo URLs have a for      
+
+1132
+01:01:05,062 --> 01:01:07,929
+example, a little               
+Stanford URL right here and     
+
+1133
+01:01:07,931 --> 01:01:11,266
+also some NASA ones which       
+we'll be doing next time.       
+
+1134
+01:01:11,268 --> 01:01:15,737
+But I'm just gonna use this     
+Stanford URL right here. So     
+
+1135
+01:01:15,739 --> 01:01:21,643
+our imageURL is                 
+DemoURL.stanford.               
+
+1136
+01:01:21,645 --> 01:01:24,813
+What I don't like about the     
+way we've written this code     
+
+1137
+01:01:24,815 --> 01:01:28,917
+though is here in viewDidLoad,  
+I'm setting my imageURL to      
+
+1138
+01:01:28,919 --> 01:01:31,119
+stanford.                       
+That's gonna go up here and     
+
+1139
+01:01:31,121 --> 01:01:33,455
+cause this fetchImage           
+to immediately happen.          
+
+1140
+01:01:33,457 --> 01:01:38,226
+Which is gonna go out in the    
+Internet and grab this image.   
+
+1141
+01:01:38,228 --> 01:01:39,628
+So as soon                      
+viewDidLoad happens,            
+
+1142
+01:01:39,630 --> 01:01:42,497
+man, I'm not on the Internet    
+getting that thing. And         
+
+1143
+01:01:42,499 --> 01:01:46,301
+that's probably not something   
+you wanna do, why wouldn't      
+
+1144
+01:01:46,303 --> 01:01:49,905
+you. Imagine this MVC which is  
+supposed to be reusable was in  
+
+1145
+01:01:49,907 --> 01:01:56,578
+a tab bar, okay. All of the     
+MVCs that are in the tab bar,   
+
+1146
+01:01:56,580 --> 01:02:01,083
+they're all created in          
+viewDidLoaded even before       
+
+1147
+01:02:01,085 --> 01:02:05,554
+any of them are shown. So, if   
+I had a tab bar that had five   
+
+1148
+01:02:05,556 --> 01:02:08,990
+image view controllers right    
+here, they'd all be off on      
+
+1149
+01:02:08,992 --> 01:02:12,494
+the Internet loading things.    
+I might not click on any of     
+
+1150
+01:02:12,496 --> 01:02:14,763
+them. And                       
+I wasted the cellular data      
+
+1151
+01:02:14,765 --> 01:02:16,965
+plan of my user, all right.     
+
+1152
+01:02:16,967 --> 01:02:21,436
+So I really only wanna go       
+fetch this URL when this        
+
+1153
+01:02:21,438 --> 01:02:25,574
+view controller is going to     
+appear on screen for sure. So   
+
+1154
+01:02:25,576 --> 01:02:28,210
+can anyone think of where I     
+would put that instead of in    
+
+1155
+01:02:28,212 --> 01:02:33,815
+viewDidLoad there? Different    
+view controller lifecycle       
+
+1156
+01:02:33,817 --> 01:02:39,654
+method.                         
+How about viewWillAppear?       
+
+1157
+01:02:39,656 --> 01:02:43,925
+Super.viewWillAppear. So        
+
+1158
+01:02:43,927 --> 01:02:46,895
+I'm going to do the actual      
+fetching in viewWillAppear.     
+
+1159
+01:02:46,897 --> 01:02:51,500
+Now, I wanna do this, no?       
+Okay, there's another problem   
+
+1160
+01:02:51,502 --> 01:02:53,101
+though. What if I'm             
+already onscreen and            
+
+1161
+01:02:53,103 --> 01:02:57,172
+someone sets my image? Then I   
+can't do it in viewWillAppear.  
+
+1162
+01:02:57,174 --> 01:02:59,674
+I've gotta do it right away.    
+So I can kind of                
+
+1163
+01:02:59,676 --> 01:03:02,511
+really just want to delay       
+doing it to viewWillAppear      
+
+1164
+01:03:02,513 --> 01:03:06,047
+if I'm not on screen already.   
+So what I'm gonna do up here    
+
+1165
+01:03:06,049 --> 01:03:10,452
+with my imageURL up here        
+is I'm just gonna check and     
+
+1166
+01:03:10,454 --> 01:03:15,791
+see if I'm currently on         
+screen and if I am, so          
+
+1167
+01:03:15,793 --> 01:03:21,563
+I'm gonna say if my             
+view.window is not nil,         
+
+1168
+01:03:21,565 --> 01:03:24,866
+then I'm gonna go fetch this    
+image right away, okay. So      
+
+1169
+01:03:24,868 --> 01:03:27,903
+view, remember that's the var   
+that's the top level thing.     
+
+1170
+01:03:27,905 --> 01:03:32,240
+Window is a var that is in      
+all UI views which tells        
+
+1171
+01:03:32,242 --> 01:03:35,477
+you the window it's in. And     
+if you don't have a window,     
+
+1172
+01:03:35,479 --> 01:03:38,480
+it means you're not on screen.  
+If you do have a window,        
+
+1173
+01:03:38,482 --> 01:03:42,050
+you are on screen. So           
+if my view.window is not nil,   
+
+1174
+01:03:42,052 --> 01:03:43,985
+then I'm on screen.             
+I'm gonna go ahead and fetch.   
+
+1175
+01:03:43,987 --> 01:03:46,922
+Otherwise I'm not gonna fetch.  
+And instead down here in        
+
+1176
+01:03:46,924 --> 01:03:52,394
+viewWillAppear, I'm gonna       
+say if my image is nil. So      
+
+1177
+01:03:52,396 --> 01:03:58,200
+if I don't have an image yet    
+so far, then go fetch it. So    
+
+1178
+01:03:58,202 --> 01:04:01,736
+you see how the combination of  
+these two things is going to    
+
+1179
+01:04:01,738 --> 01:04:04,840
+wait to fetch it until view     
+will appear. Unless I'm         
+
+1180
+01:04:04,842 --> 01:04:09,244
+already on screen, then it'll   
+fetch it right away. So         
+
+1181
+01:04:09,246 --> 01:04:10,045
+that's at least delaying it.    
+
+1182
+01:04:10,047 --> 01:04:13,048
+So now if I were in tab bars,   
+when I clicked on the tab,      
+
+1183
+01:04:13,050 --> 01:04:16,084
+viewWillAppear would happen     
+and I would load up. And        
+
+1184
+01:04:16,086 --> 01:04:18,687
+if I did something that caused  
+the image to change, it would   
+
+1185
+01:04:18,689 --> 01:04:22,324
+change right away, cuz I'd be   
+visible. If I went offscreen,   
+
+1186
+01:04:22,326 --> 01:04:25,060
+then clicked on another tab,    
+my image was changed,           
+
+1187
+01:04:25,062 --> 01:04:26,795
+it wouldn't change.             
+When I click on it,             
+
+1188
+01:04:26,797 --> 01:04:27,963
+then it would go get            
+it from the Internet.           
+
+1189
+01:04:27,965 --> 01:04:31,633
+So, I'm minimizing the amount   
+of data plan usage              
+
+1190
+01:04:31,635 --> 01:04:34,736
+if the person's going,          
+doing it over cell.             
+
+1191
+01:04:34,738 --> 01:04:37,005
+Okay, so, I think we got        
+everything we need here to      
+
+1192
+01:04:37,007 --> 01:04:40,942
+make this work. Let's try       
+running, let's go on an iPhone  
+
+1193
+01:04:40,944 --> 01:04:47,649
+7. Hopefully our network works  
+on this laptop here. Okay, so,  
+
+1194
+01:04:47,651 --> 01:04:52,120
+it comes up here, and it's not  
+showing. Where is our image?    
+
+1195
+01:04:52,122 --> 01:04:55,323
+We don't have any image. Well,  
+I think I see something in      
+
+1196
+01:04:55,325 --> 01:05:00,629
+the console down here. Let's    
+see what that says. It says,    
+
+1197
+01:05:00,631 --> 01:05:05,967
+App Transport Security has      
+blocked a cleartext HTTP,       
+
+1198
+01:05:05,969 --> 01:05:10,438
+hm. It's insecure, of course,   
+we know HTTP is insecure,       
+
+1199
+01:05:10,440 --> 01:05:13,808
+HTTPS is secure. It says,       
+temporary exceptions can be     
+
+1200
+01:05:13,810 --> 01:05:16,878
+configured via your app's       
+Info.plist file. Luckily,       
+
+1201
+01:05:16,880 --> 01:05:20,215
+I didn't move my Info.plist     
+into Supporting Files,          
+
+1202
+01:05:20,217 --> 01:05:23,318
+cuz I knew this was gonna       
+happen, obviously. So           
+
+1203
+01:05:23,320 --> 01:05:23,885
+what's going on here?           
+
+1204
+01:05:23,887 --> 01:05:27,689
+Well, if you look at the URL    
+that we're trying to load,      
+
+1205
+01:05:27,691 --> 01:05:31,126
+this Stanford URL,              
+see it's an insecure HTTP URL.  
+
+1206
+01:05:31,128 --> 01:05:34,029
+And by default, iOS does        
+not let you load those up.      
+
+1207
+01:05:34,031 --> 01:05:38,266
+You have to say that you're     
+willing to load those up        
+
+1208
+01:05:38,268 --> 01:05:41,469
+untrusted URLs and you do       
+that with this Info.plist.      
+
+1209
+01:05:41,471 --> 01:05:45,774
+So what is an Info.plist? It's  
+really just a list of some      
+
+1210
+01:05:45,776 --> 01:05:50,478
+settings, some configurations.  
+For example, it shows, will     
+
+1211
+01:05:50,480 --> 01:05:53,281
+you run in portrait mode? Will  
+you run in landscape left?      
+
+1212
+01:05:53,283 --> 01:05:55,450
+In landscape right?             
+Those kinds of things.          
+
+1213
+01:05:55,452 --> 01:05:58,820
+It's really kind of runtime     
+configuration, how your app     
+
+1214
+01:05:58,822 --> 01:06:03,391
+will run. So we can add         
+this App Transport Security     
+
+1215
+01:06:03,393 --> 01:06:06,227
+that we need right here         
+by right-clicking, okay,        
+
+1216
+01:06:06,229 --> 01:06:09,197
+we right-click. Pay attention   
+here, cuz you're gonna need to  
+
+1217
+01:06:09,199 --> 01:06:12,834
+do this probably, in a, maybe   
+in a future homework. But       
+
+1218
+01:06:12,836 --> 01:06:15,303
+we're gonna right-click and     
+pick Add Row.                   
+
+1219
+01:06:15,305 --> 01:06:18,006
+So that's gonna add a row.      
+Oops, we don't wanna add        
+
+1220
+01:06:18,008 --> 01:06:22,110
+a row there, sorry. That added  
+a row to our support interface  
+
+1221
+01:06:22,112 --> 01:06:22,677
+configuration.                  
+>> So                           
+
+1222
+01:06:22,679 --> 01:06:26,581
+we wanna be not selecting       
+that, and do Add Row. And       
+
+1223
+01:06:26,583 --> 01:06:29,517
+if you go look in Add Row,      
+right near the top is App       
+
+1224
+01:06:29,519 --> 01:06:32,287
+transport security settings.    
+You see it right there? So      
+
+1225
+01:06:32,289 --> 01:06:36,391
+I'm gonna click on that then    
+I'm gonna open the security     
+
+1226
+01:06:36,393 --> 01:06:39,494
+settings. Don't forget to       
+open those settings and         
+
+1227
+01:06:39,496 --> 01:06:42,564
+then hit plus which will        
+add a security setting and      
+
+1228
+01:06:42,566 --> 01:06:44,399
+here you can see the options.   
+And                             
+
+1229
+01:06:44,401 --> 01:06:47,035
+we want the one which is        
+allow arbitrary loads.          
+
+1230
+01:06:47,037 --> 01:06:50,872
+We'll allow any HTTP URL to be  
+loaded and we're gonna go over  
+
+1231
+01:06:50,874 --> 01:06:55,377
+here and say that that is yes.  
+So allows arbitrary loads,      
+
+1232
+01:06:55,379 --> 01:06:58,413
+yes, okay? So we just add       
+this to our Info.plist,         
+
+1233
+01:06:58,415 --> 01:07:02,283
+now when we run our app, we've  
+given permission, essentially,  
+
+1234
+01:07:02,285 --> 01:07:08,089
+for the app to load             
+these http non-S URLs.          
+
+1235
+01:07:08,091 --> 01:07:09,724
+Okay, there we go,              
+look at that, woo hoo!          
+
+1236
+01:07:09,726 --> 01:07:12,460
+We got Stanford, and            
+we can even rotate.             
+
+1237
+01:07:12,462 --> 01:07:16,297
+Good, now of course we can't    
+see the whole image here and    
+
+1238
+01:07:16,299 --> 01:07:19,467
+we can't zoom in. It would be   
+nice to be able to zoom in.     
+
+1239
+01:07:19,469 --> 01:07:22,904
+For that we obviously           
+need a scroll view. So          
+
+1240
+01:07:22,906 --> 01:07:25,974
+how are we going to put         
+a scroll view in here? Well,    
+
+1241
+01:07:25,976 --> 01:07:29,511
+this is a good opportunity      
+to show you mixing code for     
+
+1242
+01:07:29,513 --> 01:07:34,215
+doing your views in code, with  
+doing it in the storyboard.     
+
+1243
+01:07:34,217 --> 01:07:37,519
+So I'm gonna put my Scroll      
+View in the storyboard, and     
+
+1244
+01:07:37,521 --> 01:07:40,555
+we'll leave the image view in   
+code. Okay, so you see them     
+
+1245
+01:07:40,557 --> 01:07:43,858
+both working together. So       
+to put a Scroll View here in    
+
+1246
+01:07:43,860 --> 01:07:45,960
+my storyboard,                  
+I'm going to just search for    
+
+1247
+01:07:45,962 --> 01:07:49,364
+Scroll View down here in the    
+utilities window, there it is.  
+
+1248
+01:07:49,366 --> 01:07:52,100
+I'm gonna drag out              
+a scroll view, here it is.      
+
+1249
+01:07:52,102 --> 01:07:56,004
+I'm gonna use the blue lines    
+to put it in the whole,         
+
+1250
+01:07:56,006 --> 01:08:00,842
+filling my whole, MVC here,     
+without even any borders.       
+
+1251
+01:08:00,844 --> 01:08:03,812
+Then I'm gonna use this         
+little reset to suggested       
+
+1252
+01:08:03,814 --> 01:08:05,613
+constraints, you                
+remember that?                  
+
+1253
+01:08:05,615 --> 01:08:08,383
+To have it do the auto          
+layout for me.                  
+
+1254
+01:08:08,385 --> 01:08:11,419
+Then I'm actually gonna go      
+up to the size inspector,       
+
+1255
+01:08:11,421 --> 01:08:15,123
+right here, and click on it     
+to double-check what it did,    
+
+1256
+01:08:15,125 --> 01:08:17,392
+in terms of constraints.        
+And sure enough,                
+
+1257
+01:08:17,394 --> 01:08:20,328
+it's done exactly the           
+constraints I want, all right?  
+
+1258
+01:08:20,330 --> 01:08:23,131
+So we have this. We wanna       
+talk to the scroll view,        
+
+1259
+01:08:23,133 --> 01:08:26,634
+of course we need an outlet     
+to it. So, let's get our        
+
+1260
+01:08:26,636 --> 01:08:31,706
+controller on screen at         
+the same time here and let's    
+
+1261
+01:08:31,708 --> 01:08:35,844
+control drag. I'm gonna put it  
+to scroll view down here by     
+
+1262
+01:08:35,846 --> 01:08:39,013
+the image view. So let's        
+control drag right into our     
+
+1263
+01:08:39,015 --> 01:08:42,350
+code right there. It's          
+an outlet, get to scroll view,  
+
+1264
+01:08:42,352 --> 01:08:44,719
+notice it's weak.               
+We talked about why our         
+
+1265
+01:08:44,721 --> 01:08:48,623
+outlets are weak. I'm gonna     
+call this outlet scrollView.    
+
+1266
+01:08:48,625 --> 01:08:52,060
+Cuz that's what it is. Var      
+scrollView right there. Now,    
+
+1267
+01:08:52,062 --> 01:08:57,265
+I want to integrate the image   
+view into the scroll view,      
+
+1268
+01:08:57,267 --> 01:09:02,203
+so I'm just going to,           
+when the scroll view gets set,  
+
+1269
+01:09:02,205 --> 01:09:07,942
+I'm just gonna add that         
+image view as a sub view.       
+
+1270
+01:09:08,744 --> 01:09:11,412
+Okay, and now I don't need      
+to do that in viewDidLoad.      
+
+1271
+01:09:11,414 --> 01:09:14,249
+Where is viewDidLoad?           
+Okay, don't need to do adding   
+
+1272
+01:09:14,251 --> 01:09:15,950
+the image view as               
+a sub view of our top           
+
+1273
+01:09:15,952 --> 01:09:18,820
+level view because now I'm      
+adding it as a sub view of      
+
+1274
+01:09:18,822 --> 01:09:21,389
+the scroll view, all right?     
+Make sense? So,                 
+
+1275
+01:09:21,391 --> 01:09:23,491
+let's see if that just works.   
+That should just work.          
+
+1276
+01:09:23,493 --> 01:09:28,730
+Yeah, it's good. You should     
+all be thinking about,          
+
+1277
+01:09:28,732 --> 01:09:31,633
+hm, why wouldn't that work?     
+I'm gonna ask you why it's not  
+
+1278
+01:09:31,635 --> 01:09:34,369
+working in a second. All        
+right, here it is! It looks     
+
+1279
+01:09:34,371 --> 01:09:38,306
+like it works. Let's scroll,    
+we can't scroll around. Why?    
+
+1280
+01:09:38,308 --> 01:09:41,009
+I know I put a scroll view in   
+there. How come the scroll      
+
+1281
+01:09:41,011 --> 01:09:45,980
+view's not scrolling? Anyone    
+have an idea? Okay, the,        
+
+1282
+01:09:45,982 --> 01:09:47,916
+he's saying                     
+the the two variables,          
+
+1283
+01:09:47,918 --> 01:09:49,450
+the zooming things.             
+Well, that's true.              
+
+1284
+01:09:49,452 --> 01:09:52,720
+That's why it won't zoom,       
+but it won't even pan.          
+
+1285
+01:09:52,722 --> 01:09:56,324
+Why won't it even pan around,   
+let alone zoom?                 
+
+1286
+01:09:56,326 --> 01:09:56,724
+>> Content size.                
+
+1287
+01:09:56,726 --> 01:09:57,825
+>> Content size, exactly.       
+
+1288
+01:09:57,827 --> 01:09:58,993
+We haven't set                  
+the content size.               
+
+1289
+01:09:58,995 --> 01:10:02,330
+So, this scroll view actually   
+is panning around the content   
+
+1290
+01:10:02,332 --> 01:10:07,669
+size, it's just that the        
+content size is zero-zero. So,  
+
+1291
+01:10:07,671 --> 01:10:08,803
+when you are trying             
+to pan around,                  
+
+1292
+01:10:08,805 --> 01:10:11,339
+it's like you're not even over  
+that zero, zero spot, and       
+
+1293
+01:10:11,341 --> 01:10:14,409
+it's impossible to be over it.  
+So, we want the content size    
+
+1294
+01:10:14,411 --> 01:10:17,245
+to be encompassing this         
+whole image here so             
+
+1295
+01:10:17,247 --> 01:10:20,081
+we can pan around with it,      
+so let's do that.               
+
+1296
+01:10:20,083 --> 01:10:23,384
+Now, where do we want to        
+set our content size?           
+
+1297
+01:10:23,386 --> 01:10:26,454
+There's actually two times      
+that we wanna do it.            
+
+1298
+01:10:26,456 --> 01:10:29,257
+For sure when our scroll view   
+is first hooked up here,        
+
+1299
+01:10:29,259 --> 01:10:31,459
+we're gonna wanna set           
+our content size.               
+
+1300
+01:10:31,461 --> 01:10:34,896
+So I'm gonna say the            
+contentSize here equals and     
+
+1301
+01:10:34,898 --> 01:10:38,666
+what is our contentSize         
+gonna be equal too? Well,       
+
+1302
+01:10:38,668 --> 01:10:42,537
+it's our image view's           
+frame size, okay?               
+
+1303
+01:10:42,539 --> 01:10:45,373
+We want to enclose our          
+entire image view.              
+
+1304
+01:10:45,375 --> 01:10:47,442
+So, whatever the size           
+of our imageView is,            
+
+1305
+01:10:47,444 --> 01:10:50,411
+that's what we the content      
+size of our scrollView to be.   
+
+1306
+01:10:50,413 --> 01:10:53,881
+But there's another time we're  
+gonna wanna sent the content    
+
+1307
+01:10:53,883 --> 01:10:56,184
+size, which is if our           
+image changes, right?           
+
+1308
+01:10:56,186 --> 01:10:58,519
+If you put a new image in       
+there, then we're gonna have    
+
+1309
+01:10:58,521 --> 01:11:00,121
+to adjust our content           
+size to make a change.          
+
+1310
+01:11:00,123 --> 01:11:03,124
+And luckily, woo hoo, we have   
+this nice var down here,        
+
+1311
+01:11:03,126 --> 01:11:06,094
+so that every time we set       
+our image, we can do things.    
+
+1312
+01:11:06,096 --> 01:11:09,163
+And sure enough, right here,    
+I'm just gonna say,             
+
+1313
+01:11:09,165 --> 01:11:13,268
+scrollView.contentsize equals   
+the imageView.frame.size.       
+
+1314
+01:11:13,270 --> 01:11:17,138
+Now, this might seem good.      
+But actually this is very bad.  
+
+1315
+01:11:17,140 --> 01:11:21,209
+And the reason for that is      
+that. If we're in image         
+
+1316
+01:11:21,211 --> 01:11:24,879
+view controller, and            
+we're getting prepared.         
+
+1317
+01:11:24,881 --> 01:11:27,482
+Someone's going to              
+set our image url.              
+
+1318
+01:11:27,484 --> 01:11:30,585
+That's how they're gonna        
+prepare us right? So            
+
+1319
+01:11:30,587 --> 01:11:34,555
+let's follow what that's gonna  
+do. So imageURL is going to     
+
+1320
+01:11:34,557 --> 01:11:40,795
+set the image to nil,           
+down here. Set this image,      
+
+1321
+01:11:40,797 --> 01:11:43,998
+to nil, and it's gonna try to   
+execute this line of code,      
+
+1322
+01:11:44,000 --> 01:11:49,570
+and that is gonna crash.        
+Because when we're preparing,   
+
+1323
+01:11:49,572 --> 01:11:54,776
+our outlets are not set so      
+this is nil. So the way around  
+
+1324
+01:11:54,778 --> 01:11:57,979
+that? Question mark. This       
+optional chain. If it's nil,    
+
+1325
+01:11:57,981 --> 01:12:00,048
+I won't be setting the          
+contentSize of the scrollView,  
+
+1326
+01:12:00,050 --> 01:12:02,784
+but that's okay cuz later,      
+I'll come along and             
+
+1327
+01:12:02,786 --> 01:12:05,586
+do it here when the outlet      
+does get hooked up. So,         
+
+1328
+01:12:05,588 --> 01:12:08,423
+this is just to remind you      
+that any time you're accessing  
+
+1329
+01:12:08,425 --> 01:12:12,360
+outlets and methods that might  
+be called during prepare, you   
+
+1330
+01:12:12,362 --> 01:12:17,398
+need to optionally chain them,  
+okay? So it doesn't crash       
+
+1331
+01:12:17,400 --> 01:12:20,968
+your app during prepare. All    
+right, so let's go ahead and    
+
+1332
+01:12:20,970 --> 01:12:24,939
+see if that fixed everything,   
+set our content size here.      
+
+1333
+01:12:25,941 --> 01:12:31,112
+Should be good to go.           
+All right,                      
+
+1334
+01:12:31,114 --> 01:12:36,117
+here's our image, and look at   
+that, scrolls nicely, rotate,   
+
+1335
+01:12:36,119 --> 01:12:41,089
+okay, scroll. Okay, and notice  
+it has a kinda this little      
+
+1336
+01:12:41,091 --> 01:12:43,891
+thing where you scroll too      
+far and it bounces back.        
+
+1337
+01:12:43,893 --> 01:12:47,295
+You can control that, by the    
+way, and scrollView's one of    
+
+1338
+01:12:47,297 --> 01:12:50,498
+its settings, all right? Oops,  
+wrong rotation there, okay,     
+
+1339
+01:12:50,500 --> 01:12:54,469
+we got it? Now, of course, now  
+we'd like to zoom in. We wanna  
+
+1340
+01:12:54,471 --> 01:12:57,004
+look and see if we can find     
+any of ourselves down here.     
+
+1341
+01:12:57,006 --> 01:12:59,474
+Maybe that's one of us right    
+there. We're gonna zoom in and  
+
+1342
+01:12:59,476 --> 01:13:03,411
+see. But for zooming,           
+as he was saying up above,      
+
+1343
+01:13:03,413 --> 01:13:06,814
+we need to make sure we set     
+the minimum and maximum         
+
+1344
+01:13:06,816 --> 01:13:09,417
+zoom scale. Cuz actually        
+the minimum and maximum         
+
+1345
+01:13:09,419 --> 01:13:12,754
+zoom scale are set right now,   
+they're set to 1.0. So          
+
+1346
+01:13:12,756 --> 01:13:17,325
+that's minimum and max, it      
+means no scrolling. All right,  
+
+1347
+01:13:17,327 --> 01:13:19,961
+so let's set that. A good       
+place to set that is probably   
+
+1348
+01:13:19,963 --> 01:13:23,297
+when our scroll view is first   
+hooked up as an outlet.         
+
+1349
+01:13:23,299 --> 01:13:25,633
+So we'll just do this here,     
+we'll say,                      
+
+1350
+01:13:25,635 --> 01:13:29,871
+scrollView.minimumZoomScale.    
+Let's go really small,          
+
+1351
+01:13:29,873 --> 01:13:34,008
+how bout 0.03, okay,            
+3% of the size will go,         
+
+1352
+01:13:34,010 --> 01:13:36,844
+make allow our image            
+to be really small.             
+
+1353
+01:13:36,846 --> 01:13:40,214
+And maximum, just to show you   
+the difference, we'll make it   
+
+1354
+01:13:40,216 --> 01:13:43,718
+only, so we can only be twice   
+as big. Or, or we can even      
+
+1355
+01:13:43,720 --> 01:13:46,587
+make it so it can't be bigger,  
+right? 1.0 would be,            
+
+1356
+01:13:46,589 --> 01:13:47,889
+it can never be any             
+bigger than it is.              
+
+1357
+01:13:47,891 --> 01:13:49,991
+It could be smaller, but not    
+bigger. Which we might want,    
+
+1358
+01:13:49,993 --> 01:13:53,361
+because if it's allowed to be   
+bigger than its natural size,   
+
+1359
+01:13:53,363 --> 01:13:54,562
+it's gonna start                
+getting pixellated and          
+
+1360
+01:13:54,564 --> 01:13:57,965
+we don't want that. But just    
+so you can see it happening.    
+
+1361
+01:13:57,967 --> 01:14:03,538
+And what's the other thing we   
+need to make zooming work? No   
+
+1362
+01:14:03,540 --> 01:14:08,576
+one remember?                   
+We need delegation. Yes,        
+
+1363
+01:14:08,578 --> 01:14:11,779
+the scroll view needs to        
+know which of its subviews      
+
+1364
+01:14:11,781 --> 01:14:14,348
+you want to have                
+the transform change. And       
+
+1365
+01:14:14,350 --> 01:14:17,151
+it does that by asking you to   
+delegate. So now we're gonna    
+
+1366
+01:14:17,153 --> 01:14:19,554
+get to see delegates            
+in action right here.           
+
+1367
+01:14:19,556 --> 01:14:24,692
+So to make a delegate work,     
+you need to set the delegates   
+
+1368
+01:14:24,694 --> 01:14:26,661
+to be yourself.                 
+So I need to say,               
+
+1369
+01:14:26,663 --> 01:14:31,732
+scrollView.delegate = self.     
+Now, this is not legal,         
+
+1370
+01:14:31,734 --> 01:14:35,970
+and this is going to generate   
+an error. And hopefully you     
+
+1371
+01:14:35,972 --> 01:14:38,606
+can kinda see why, we'll look   
+at the error, and it says,      
+
+1372
+01:14:38,608 --> 01:14:41,909
+you cannot assign the value     
+of type ImageViewController,    
+
+1373
+01:14:41,911 --> 01:14:46,447
+which is what self is, to       
+the type UIScrollViewDelegate   
+
+1374
+01:14:46,449 --> 01:14:49,317
+optional. So I told you that    
+the ScrollViewDelegate is       
+
+1375
+01:14:49,319 --> 01:14:52,587
+an optional                     
+UIScrollViewDelegate protocol,  
+
+1376
+01:14:52,589 --> 01:14:53,888
+and that's what it is.          
+And of course,                  
+
+1377
+01:14:53,890 --> 01:14:57,058
+self isn't that even though it  
+doesn't employ any methods and  
+
+1378
+01:14:57,060 --> 01:14:59,093
+that protocol has only          
+optional methods.               
+
+1379
+01:14:59,095 --> 01:15:01,929
+Because it needs to go          
+up here and say yes,            
+
+1380
+01:15:01,931 --> 01:15:07,635
+I'm a UIScrollViewDelegate.     
+Okay, so this is this class,    
+
+1381
+01:15:07,637 --> 01:15:11,839
+UIViewController, saying I      
+conform to this protocol, and   
+
+1382
+01:15:11,841 --> 01:15:12,540
+as soon as I do that,           
+
+1383
+01:15:12,542 --> 01:15:15,343
+the error goes away, and        
+there's no errors. Even         
+
+1384
+01:15:15,345 --> 01:15:17,979
+though I didn't do anything,    
+I didn't actually implement     
+
+1385
+01:15:17,981 --> 01:15:20,515
+the UIScrollView delegate       
+protocol, that's because all    
+
+1386
+01:15:20,517 --> 01:15:23,885
+the methods in UIScrollView     
+delegate are optional. So       
+
+1387
+01:15:23,887 --> 01:15:25,920
+I don't implement any,          
+but they're all optional.       
+
+1388
+01:15:25,922 --> 01:15:29,023
+So I've conformed to            
+the protocol. But of course,    
+
+1389
+01:15:29,025 --> 01:15:30,825
+that's not gonna help us with   
+our zooming because we in       
+
+1390
+01:15:30,827 --> 01:15:34,762
+fact do need to implement       
+a method. Now I'm gonna show    
+
+1391
+01:15:34,764 --> 01:15:38,065
+you a cool way to do this with  
+extensions. I'm going to add    
+
+1392
+01:15:38,067 --> 01:15:41,869
+protocol conformance to my      
+ImageViewController with        
+
+1393
+01:15:41,871 --> 01:15:44,972
+an extension. And               
+I'm gonna do that like this.    
+
+1394
+01:15:44,974 --> 01:15:48,342
+So I'm gonna make it so that    
+it does not conform, okay,      
+
+1395
+01:15:48,344 --> 01:15:50,244
+ImageViewController does        
+not conform.                    
+
+1396
+01:15:50,246 --> 01:15:54,682
+But I'm gonna add an extension  
+down here, at the bottom of my  
+
+1397
+01:15:54,684 --> 01:15:59,186
+file, which is an extension     
+to the ImageViewController,     
+
+1398
+01:15:59,188 --> 01:16:03,691
+which causes                    
+ImageViewController to conform  
+
+1399
+01:16:03,693 --> 01:16:07,862
+to the UIScrollViewDelegate     
+protocol. Okay, so by just      
+
+1400
+01:16:07,864 --> 01:16:12,300
+putting this here, this error   
+down here is gonna go away.     
+
+1401
+01:16:12,302 --> 01:16:15,303
+Because I've added an           
+extension, which causes this,   
+
+1402
+01:16:15,305 --> 01:16:18,272
+this class right here to        
+conform to this protocol.       
+
+1403
+01:16:18,274 --> 01:16:19,740
+Again, all the methods          
+are optional so                 
+
+1404
+01:16:19,742 --> 01:16:22,410
+normally we would have to put   
+a bunch of methods in here.     
+
+1405
+01:16:22,412 --> 01:16:25,446
+But I am gonna put the one      
+method we do want down here,    
+
+1406
+01:16:25,448 --> 01:16:30,351
+which is viewForZooming         
+in scrollView.                  
+
+1407
+01:16:30,353 --> 01:16:33,854
+Now what's interesting, notice  
+as I start to type this,        
+
+1408
+01:16:33,856 --> 01:16:37,425
+it actually knows that I'm      
+a UIScrollViewDelegate, so      
+
+1409
+01:16:37,427 --> 01:16:39,560
+it offers me that               
+method as a choice, so          
+
+1410
+01:16:39,562 --> 01:16:42,663
+I'll double click on it.        
+Here's my viewForZooming in     
+
+1411
+01:16:42,665 --> 01:16:46,033
+scrollView. I just need to      
+return which view I wanna       
+
+1412
+01:16:46,035 --> 01:16:48,302
+zoom in for us. Of course,      
+it's that image view.           
+
+1413
+01:16:48,304 --> 01:16:51,405
+So I wanna just say             
+return imageView, but           
+
+1414
+01:16:51,407 --> 01:16:57,878
+that doesn't work. Why do       
+you think that doesn't work?    
+
+1415
+01:16:57,880 --> 01:17:03,884
+This imageView is private.      
+
+1416
+01:17:03,886 --> 01:17:08,389
+Now, I could unmake             
+it private, but                 
+
+1417
+01:17:08,391 --> 01:17:11,125
+now everyone can see            
+that image view, and            
+
+1418
+01:17:11,127 --> 01:17:14,495
+that's a little too unprivate.  
+So there's another kind of      
+
+1419
+01:17:14,497 --> 01:17:20,034
+private called fileprivate,     
+and what fileprivate means is,  
+
+1420
+01:17:20,036 --> 01:17:24,038
+it's private to everyone        
+in this file. So                
+
+1421
+01:17:24,040 --> 01:17:28,409
+that allows this extension      
+to see this image view. And     
+
+1422
+01:17:28,411 --> 01:17:29,443
+it's still private              
+to everyone else.               
+
+1423
+01:17:29,445 --> 01:17:31,946
+So everyone using my MVC        
+who sees this, other files,     
+
+1424
+01:17:31,948 --> 01:17:35,683
+it's still private, they don't  
+see it. But this guy can use    
+
+1425
+01:17:35,685 --> 01:17:37,718
+it, okay? So that's             
+a different kind of private,    
+
+1426
+01:17:37,720 --> 01:17:41,789
+fileprivate. All right, so      
+we got the view for zooming.    
+
+1427
+01:17:41,791 --> 01:17:44,025
+This is, in fact,               
+the view we wanna zoom.         
+
+1428
+01:17:44,027 --> 01:17:46,360
+So let's go ahead and           
+take a look here.               
+
+1429
+01:17:52,734 --> 01:17:55,302
+All right, here it is. We       
+can still scroll around, and    
+
+1430
+01:17:55,304 --> 01:17:58,839
+if we hold down the option key  
+and get our two fingers here,   
+
+1431
+01:17:58,841 --> 01:18:02,410
+we can also zoom. Okay, and     
+
+1432
+01:18:02,412 --> 01:18:05,312
+we can zoom in really small,    
+and we can zoom out.            
+
+1433
+01:18:05,314 --> 01:18:08,549
+But notice, it won't let        
+me zoom any larger than         
+
+1434
+01:18:08,551 --> 01:18:13,154
+1.0 because I set that as       
+my maximum zoom scale.          
+
+1435
+01:18:13,622 --> 01:18:17,458
+All right, so, the last thing   
+I'm gonna do, well, I'll leave  
+
+1436
+01:18:17,460 --> 01:18:20,494
+this as is cuz I'm gonna post   
+this code like this, and        
+
+1437
+01:18:20,496 --> 01:18:24,131
+you can play around with it.    
+Next time, what I'm gonna       
+
+1438
+01:18:24,133 --> 01:18:27,601
+do is add another MVC that      
+lets us pick some NASA images,  
+
+1439
+01:18:27,603 --> 01:18:31,072
+you can see any NASA images.    
+And one thing we're gonna find  
+
+1440
+01:18:31,074 --> 01:18:34,175
+about this images, they're      
+huge, and even on our Stanford  
+
+1441
+01:18:34,177 --> 01:18:37,578
+network, they take a long time  
+to download. And that's gonna   
+
+1442
+01:18:37,580 --> 01:18:40,981
+be annoying, and so we are      
+going to use multithreading     
+
+1443
+01:18:40,983 --> 01:18:42,016
+to keep our UI responsive,      
+
+1444
+01:18:42,018 --> 01:18:44,685
+even though it's doing          
+this very expensive thing,      
+
+1445
+01:18:44,687 --> 01:18:48,589
+which is downloading this       
+huge file, all right? So,       
+
+1446
+01:18:48,591 --> 01:18:50,691
+I'll see you then.              
+>> For                          
+
+1447
+01:18:50,693 --> 01:18:50,724
+more, please visit              
+us at stanford.edu.             
+
