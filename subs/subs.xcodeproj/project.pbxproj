@@ -25,6 +25,14 @@
 /* Begin PBXFileReference section */
 		0D600FFD1E9072F800713875 /* subs */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = subs; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D6010001E9072F800713875 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		0D6010081E90A05C00713875 /* 10. Core Data.srt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "10. Core Data.srt"; sourceTree = "<group>"; };
+		0D6010091E90A05C00713875 /* 11. Core Data Demo.srt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "11. Core Data Demo.srt"; sourceTree = "<group>"; };
+		0D60100A1E90A05C00713875 /* 4. Views.srt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "4. Views.srt"; sourceTree = "<group>"; };
+		0D60100B1E90A05C00713875 /* 5. Gestures and Multiple MVCs.srt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "5. Gestures and Multiple MVCs.srt"; sourceTree = "<group>"; };
+		0D60100C1E90A05C00713875 /* 6. Multiple MVCs, View Controller Lifecycle, and Memory Management.srt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "6. Multiple MVCs, View Controller Lifecycle, and Memory Management.srt"; sourceTree = "<group>"; };
+		0D60100D1E90A05C00713875 /* 7. Error Handling, Extensions, Protocols, Delegation, and Scroll View.srt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "7. Error Handling, Extensions, Protocols, Delegation, and Scroll View.srt"; sourceTree = "<group>"; };
+		0D60100E1E90A05C00713875 /* 8. Multithreading and Text Field.srt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "8. Multithreading and Text Field.srt"; sourceTree = "<group>"; };
+		0D60100F1E90A05C00713875 /* 9. Table View.srt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "9. Table View.srt"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +51,7 @@
 			children = (
 				0D600FFF1E9072F800713875 /* subs */,
 				0D600FFE1E9072F800713875 /* Products */,
+				0D6010071E90A05C00713875 /* 2017 */,
 			);
 			sourceTree = "<group>";
 		};
@@ -60,6 +69,22 @@
 				0D6010001E9072F800713875 /* main.m */,
 			);
 			path = subs;
+			sourceTree = "<group>";
+		};
+		0D6010071E90A05C00713875 /* 2017 */ = {
+			isa = PBXGroup;
+			children = (
+				0D6010081E90A05C00713875 /* 10. Core Data.srt */,
+				0D6010091E90A05C00713875 /* 11. Core Data Demo.srt */,
+				0D60100A1E90A05C00713875 /* 4. Views.srt */,
+				0D60100B1E90A05C00713875 /* 5. Gestures and Multiple MVCs.srt */,
+				0D60100C1E90A05C00713875 /* 6. Multiple MVCs, View Controller Lifecycle, and Memory Management.srt */,
+				0D60100D1E90A05C00713875 /* 7. Error Handling, Extensions, Protocols, Delegation, and Scroll View.srt */,
+				0D60100E1E90A05C00713875 /* 8. Multithreading and Text Field.srt */,
+				0D60100F1E90A05C00713875 /* 9. Table View.srt */,
+			);
+			name = 2017;
+			path = ../2017;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -249,6 +274,7 @@
 				0D6010061E9072F800713875 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
